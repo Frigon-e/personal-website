@@ -5,8 +5,8 @@ import GameDescription from "../components/GameDescription";
 
 export default function Home() {
     return (
-        <div key={uuid()} className={`text-gray-300/95 bg-background h-screen w-screen`}>
-            <div className={`ml-2 mr-2 mb-8`}>
+        <div key={uuid()} className={`ml-2 mr-2 mb-8 lg:mr-6 lg:ml-6`}>
+            <div >
                 <p>Hello, my name is <span className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}>Ethan Frigon</span>. I’m currently a fourth year student
                     at Okanagan College Kelowna. I have experience implementing concepts learned into usable finished projects.
                     <br/>My <span className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}>Strongest Languages</span> are:

@@ -122,7 +122,7 @@ export default function TicTacToe() {
                                                     handleCellClick(boardIndex, rowIndex, colIndex)
                                                     console.log(boardIndex, rowIndex, colIndex)
                                                 }}
-                                                className={`border border-black h-8 w-8 text-center bg-black`}>
+                                                className={`border border-black h-8 w-8 text-center bg-black lg:w-12 lg:h-12`}>
                                                 {col || ' '}
                                             </div>
                                         ))}
