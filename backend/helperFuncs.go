@@ -166,6 +166,25 @@ func getRowColFlattenBoard(num int) [2]int {
 	return [2]int{newRow, newCol}
 }
 
+func getValidBoards(currentRow int, currentCol int, finishedBoard [3][3]int) [3][3]bool {
+	validBoards := [3][3]bool{{false, false, false}, {false, false, false}, {false, false, false}}
+	newRow := currentRow % 3
+	newCol := currentCol % 3
+	if finishedBoard[newRow][newCol] == 0 {
+		validBoards[newRow][newCol] = true
+		return validBoards
+	}
+
+	for rowIndex := 0; rowIndex < 3; rowIndex++ {
+		for colIndex := 0; colIndex < 3; colIndex++ {
+			if finishedBoard[rowIndex][colIndex] == 0 {
+				validBoards[rowIndex][colIndex] = true
+			}
+		}
+	}
+	return validBoards
+}
+
 func isNextBoard(currentRow int, currentCol int, isEightByEight bool) int {
 	if isEightByEight {
 		return isNextBoard(currentRow%3, currentCol%3, false)
