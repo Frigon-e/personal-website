@@ -24,7 +24,8 @@ export default function TicTacToe() {
     }, [currentPlayer, isComputer]);
 
     const handleCellClick = (board: number, row: number, col: number) => {
-        if (gameboard[board][row][col] != null || gameOver || currentPlayer === 'O') {
+        const boardThreeByThree = getRowColFlattenBoard(board)
+        if (gameboard[board][row][col] != null || gameOver || currentPlayer === 'O' || !validMoves[Math.floor(boardThreeByThree.Row)][Math.floor(boardThreeByThree.Col)]) {
             return;
         }
 
@@ -62,16 +63,38 @@ export default function TicTacToe() {
                 setGameOver(data.finishedGame.gameOver);
                 setWinner(data.finishedGame.winner);
 
-                let newGameboard = JSON.parse(JSON.stringify(gameboard));
+                if (data.finishedGame.gameOver) {
+                    return;
+                }
+
+
                 const computerLastMove = convertToThreeByThree(newComputerMoves[newComputerMoves.length - 1].Row, newComputerMoves[newComputerMoves.length - 1].Col);
+                const playerLastMove = convertToThreeByThree(playerMoves[playerMoves.length - 1].Row, playerMoves[playerMoves.length - 1].Col);
+
+                let newGameboard = JSON.parse(JSON.stringify(gameboard));
                 newGameboard[computerLastMove.Board][computerLastMove.Row][computerLastMove.Col] = 'O';
                 setGameboard(newGameboard);
 
                 let newFinishedBoards = JSON.parse(JSON.stringify(data.finishedGame.completedBoard));
-                setFinishedBoards(newFinishedBoards);
+
+
+                if (JSON.stringify(newFinishedBoards) !== JSON.stringify(finishedBoards)) {
+                    setFinishedBoards(newFinishedBoards);
+                    for (let i = 0; i < 3; i++) {
+                        for (let j = 0; j < 3; j++) {
+                            if (newFinishedBoards[i][j] === 1) {
+                                newGameboard[computerLastMove.Board] = Array(3).fill(Array(3).fill('O'));
+                            } else if (newFinishedBoards[i][j] === 2) {
+                                newGameboard[playerLastMove.Board] = Array(3).fill(Array(3).fill('X'));
+                            }
+                        }
+                    }
+                }
+
 
                 let newValidMoves = JSON.parse(JSON.stringify(data.validMoves));
                 setValidMoves(newValidMoves);
+
 
                 setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
                 setIsComputer(!isComputer);
@@ -98,6 +121,13 @@ export default function TicTacToe() {
         return {Board: newBoard, Row: newRow, Col: newCol};
     }
 
+    const getRowColFlattenBoard = (num: number) => {
+        const newRow = num / 3
+        const newCol = num % 3
+
+        return {Row: newRow, Col: newCol}
+    }
+
     function classNames(...classes: string[]) {
         return classes.filter(Boolean).join(' ')
     }
@@ -111,38 +141,36 @@ export default function TicTacToe() {
                     ) : (
                         <p> Game is a draw </p>
                     )}
-                    <button onClick={() => window.location.reload()}>Play Again</button>
+                    <button onClick={() => window.location.reload()} className={`mb-3`}>Play Again</button>
                 </div>
             )}
-            {!gameOver && (
-                <div className={`max-w-fit max-h-fit mx-auto mb-8`}>
-                    {/* Show a message if the computer is making a move */}
-                    {isComputer && currentPlayer === 'O' && <p>The computer is making a move...</p>}
-                    <div className="grid grid-cols-3 gap-2 bg-gradient-to-tr from-emerald-400 to-cyan-500">
-                        {gameboard.map((board, boardIndex) => (
-                            <div key={boardIndex} className={classNames(
-                                validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-900`,
-                                `grid grid-flow-row gap-1 bg-zinc-900`)}>
+            <div className={`max-w-fit max-h-fit mx-auto mb-8`}>
+                {/* Show a message if the computer is making a move */}
+                {isComputer && currentPlayer === 'O' && !gameOver && <p>The computer is making a move...</p>}
+                <div className="grid grid-cols-3 gap-2 bg-gradient-to-tr from-emerald-400 to-cyan-500">
+                    {gameboard.map((board, boardIndex) => (
+                        <div key={boardIndex} className={classNames(
+                            validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-900`,
+                            `grid grid-flow-row gap-1 bg-zinc-900`)}>
 
-                                {board.map((row, rowIndex) => (
-                                    <div key={rowIndex} className={`grid grid-flow-col gap-1`}>
-                                        {row.map((col, colIndex) => (
-                                            <div
-                                                key={colIndex}
-                                                onClick={() => {
-                                                    handleCellClick(boardIndex, rowIndex, colIndex)
-                                                    console.log(boardIndex, rowIndex, colIndex)
-                                                }}
-                                                className={`border border-black h-8 w-8 text-center bg-zinc-900/95 lg:w-12 lg:h-12`}>
-                                                {col || ' '}
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
-                        ))}
-                    </div>
-                </div>)}
+                            {board.map((row, rowIndex) => (
+                                <div key={rowIndex} className={`grid grid-flow-col gap-1`}>
+                                    {row.map((col, colIndex) => (
+                                        <div
+                                            key={colIndex}
+                                            onClick={() => {
+                                                handleCellClick(boardIndex, rowIndex, colIndex)
+                                            }}
+                                            className={`border border-black h-8 w-8 text-center bg-zinc-900/95 lg:w-12 lg:h-12`}>
+                                            {col || ' '}
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }
