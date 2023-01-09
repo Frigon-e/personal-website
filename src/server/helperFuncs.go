@@ -166,6 +166,25 @@ func getRowColFlattenBoard(num int) [2]int {
 	return [2]int{newRow, newCol}
 }
 
+func getValidBoards(currentRow int, currentCol int, finishedBoard [3][3]int) [3][3]bool {
+	validBoards := [3][3]bool{{false, false, false}, {false, false, false}, {false, false, false}}
+	newRow := currentRow % 3
+	newCol := currentCol % 3
+	if finishedBoard[newRow][newCol] == 0 {
+		validBoards[newRow][newCol] = true
+		return validBoards
+	}
+
+	for rowIndex := 0; rowIndex < 3; rowIndex++ {
+		for colIndex := 0; colIndex < 3; colIndex++ {
+			if finishedBoard[rowIndex][colIndex] == 0 {
+				validBoards[rowIndex][colIndex] = true
+			}
+		}
+	}
+	return validBoards
+}
+
 func isNextBoard(currentRow int, currentCol int, isEightByEight bool) int {
 	if isEightByEight {
 		return isNextBoard(currentRow%3, currentCol%3, false)
@@ -301,6 +320,11 @@ func checkSingleBoardWinner(board [3][3]int, depth int) int {
 	return total
 }
 
+/*
+:return: returns tile + eval of board
+
+Rather than an individual tile takes the whole board and gives a eval on whole board
+*/
 func evaluateBoard(board *[3][3]int, boardNum int, choiceEvaluationBoard *[3][3]int) {
 	results := make(chan int, 3)
 	go func() {
@@ -350,20 +374,20 @@ func evaluateBoard(board *[3][3]int, boardNum int, choiceEvaluationBoard *[3][3]
 
 	eval := getRowColFlattenBoard(boardNum)
 
-	evaluateTiles(boardNum, choiceEvaluationBoard, finishedBoard)
-
-	choiceEvaluationBoard[eval[0]][eval[1]] += total
+	choiceEvaluationBoard[eval[0]][eval[1]] = total + evaluateTiles(eval[0], eval[1], finishedBoard)
 }
 
-func evaluateTiles(boardNumber int, choiceEvaluationBoard *[3][3]int, miniBoard [3][3]int) {
+func evaluateTiles(evalRow int, evalCol int, miniBoard [3][3]int) int {
 	results := make(chan int, 3)
-	eval := getRowColFlattenBoard(boardNumber)
 
+	// Checks if diagonal is one from win
 	go func() {
 		sum := 0
-		if (eval[0] == 1 && eval[1] == 1) || (eval[0] != 1 || eval[1] != 1) {
+		// if is center tile or corner tile
+		if (evalRow == 1 && evalCol == 1) || (evalRow != 1 || evalCol != 1) {
 			diagonal := make([]int, 3)
-			if (eval[0] == 0) && (eval[1] == 0) || (eval[0] == 1 && eval[1] == 1) || (eval[0] == 2 && eval[1] == 2) {
+			// Checks if one of the diagonal tiles
+			if (evalRow == 0 && evalCol == 0) || (evalRow == 1 && evalCol == 1) || (evalRow == 2 && evalCol == 2) {
 				for index := 0; index < 3; index++ {
 					diagonal[index] = miniBoard[index][index]
 				}
@@ -374,7 +398,8 @@ func evaluateTiles(boardNumber int, choiceEvaluationBoard *[3][3]int, miniBoard 
 				}
 			}
 
-			if (eval[0] == 0) && (eval[1] == 2) || (eval[0] == 1 && eval[1] == 1) || (eval[0] == 2 && eval[1] == 0) {
+			// Checks if one of the other diagonal tiles
+			if (evalRow == 0 && evalCol == 2) || (evalRow == 1 && evalCol == 1) || (evalRow == 2 && evalCol == 0) {
 				counterIndex := 2
 				for index := 0; index < 3; index++ {
 					diagonal[index] = miniBoard[index][counterIndex]
@@ -390,11 +415,12 @@ func evaluateTiles(boardNumber int, choiceEvaluationBoard *[3][3]int, miniBoard 
 		results <- sum
 	}()
 
+	// Checks if the row is one from win
 	go func() {
 		sum := 0
 		finRow := make([]int, 3)
 		for index := 0; index < 3; index++ {
-			finRow[index] = miniBoard[index][eval[1]]
+			finRow[index] = miniBoard[index][evalCol]
 		}
 		if oneFromWin(finRow[0], finRow[1], finRow[2], 1) {
 			sum += 10
@@ -404,11 +430,12 @@ func evaluateTiles(boardNumber int, choiceEvaluationBoard *[3][3]int, miniBoard 
 		results <- sum
 	}()
 
+	// Checks if the column is one from win
 	go func() {
 		sum := 0
 		finCol := make([]int, 3)
 		for index := 0; index < 3; index++ {
-			finCol[index] = miniBoard[eval[0]][index]
+			finCol[index] = miniBoard[evalRow][index]
 		}
 		if oneFromWin(finCol[0], finCol[1], finCol[2], 1) {
 			sum += 10
@@ -423,5 +450,5 @@ func evaluateTiles(boardNumber int, choiceEvaluationBoard *[3][3]int, miniBoard 
 		total += <-results
 	}
 
-	choiceEvaluationBoard[eval[0]][eval[1]] = total
+	return total
 }

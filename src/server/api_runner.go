@@ -10,13 +10,14 @@ import (
 type TicTacHistory struct {
 	PlayerMoves   []move       `json:"playerMoves"`
 	ComputerMoves []move       `json:"computerMoves"`
+	ValidMoves    [3][3]bool   `json:"validMoves"`
 	FinishedGame  finishedGame `json:"finishedGame"`
 }
 
 type finishedGame struct {
-	CompletedBoard [9]int `json:"completedBoard"`
-	GameOver       bool   `json:"gameOver"`
-	Winner         int    `json:"winner"`
+	CompletedBoard [3][3]int `json:"completedBoard"`
+	GameOver       bool      `json:"gameOver"`
+	Winner         int       `json:"winner"`
 }
 
 type move struct {
@@ -51,6 +52,8 @@ func main() {
 
 			requestBody.ComputerMoves = findMove(requestBody.PlayerMoves, requestBody.ComputerMoves)
 			requestBody.FinishedGame = getFinishedBoard(requestBody.PlayerMoves, requestBody.ComputerMoves)
+			lastComputerMove := requestBody.ComputerMoves[len(requestBody.ComputerMoves)-1]
+			requestBody.ValidMoves = getValidBoards(lastComputerMove.Row, lastComputerMove.Col, requestBody.FinishedGame.CompletedBoard)
 
 			c.JSON(http.StatusOK, requestBody)
 		})
