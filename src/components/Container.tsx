@@ -28,7 +28,7 @@ const InnerContainer = forwardRef(function InnerContainer(
 })
 
 export const Container = forwardRef(function Container(
-  { children, ...props }: { children: React.ReactNode },
+  { children, ...props}: {className?: string, children: React.ReactNode },
   ref: React.Ref<HTMLDivElement>
 ) {
   return (
