@@ -2,36 +2,64 @@
 import Link from 'next/link'
 import clsx from 'clsx'
 import {usePathname} from "next/navigation";
+import {useRef, useState} from "react";
+import {v4 as uuid} from "uuid";
 
 function NavItem({href, children}: { href: string, children: React.ReactNode }) {
     let isActive = usePathname() === href
 
     return (
-        <li>
-            <Link
-                href={href}
-                className={clsx(
-                    'relative block px-3 py-2 transition',
-                    isActive
-                        ? 'text-teal-500 dark:text-teal-400'
-                        : 'hover:text-teal-500 dark:hover:text-teal-400'
-                )}
-            >
-                {children}
-                {isActive && (
-                    <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-500/0 via-teal-500/40 to-teal-500/0 dark:from-teal-400/0 dark:via-teal-400/40 dark:to-teal-400/0"/>
-                )}
-            </Link>
-        </li>
+        <Link
+            href={href}
+            className={clsx(
+                'relative block px-3 py-2 transition',
+                isActive
+                    ? 'text-teal-400'
+                    : 'hover:text-teal-400'
+            )}
+        >
+            {children}
+            {isActive && (
+                <span className="absolute inset-x-1 -bottom-px h-px bg-gradient-to-r from-teal-400/0 via-teal-400/40 to-teal-400/0"/>
+            )}
+        </Link>
     )
 }
 
-function DesktopNavigation({...props}) {
+type DesktopNavProps = {
+    className?: string
+}
+
+function DesktopNavigation(props: DesktopNavProps) {
+    const [showDropdown, setShowDropdown] = useState(false)
+    const dropdownRef = useRef<HTMLUListElement>(null)
+
+    const handleMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+        if (dropdownRef.current?.contains(event.target as Node)) {
+            setShowDropdown(false)
+        }
+    }
+
     return (
-        <nav {...props}>
-            <ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
-                <NavItem href="/">Home</NavItem>
-                <NavItem href="/projects">Projects</NavItem>
+        <nav {...props}
+             onMouseEnter={() => setShowDropdown(true)}
+             onMouseLeave={(event) => handleMouseLeave(event)}>
+            <ul className="flex rounded-full px-3 text-sm font-medium shadow-lg shadow-zinc-800/5 ring-1 backdrop-blur bg-zinc-800/90 text-zinc-200 ring-white/10">
+                <li>
+                    <NavItem href="/">Home</NavItem>
+                </li>
+                <li>
+                    <div className="block transition">
+                        <NavItem href="/projects">Projects</NavItem>
+                        {showDropdown && (
+                            <ul ref={dropdownRef} className="absolute right-0 py-2 mt-2 bg-zinc-800/90 rounded-md shadow-lg w-32 list-none">
+                                <li className="px-3 py-2" key={uuid()}>
+                                    <NavItem href={"/projects/tictactoe"}>TicTacToe</NavItem>
+                                </li>
+                            </ul>
+                        )}
+                    </div>
+                </li>
             </ul>
         </nav>
     )

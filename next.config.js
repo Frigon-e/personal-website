@@ -6,6 +6,10 @@ const nextConfig = {
     // Required:
     appDir: true,
   },
+   images: {
+    domains: ['images.unsplash.com'],
+  },
 };
 
 module.exports = nextConfig
+

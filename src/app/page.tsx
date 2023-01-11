@@ -5,7 +5,7 @@ import KRCLogo from '../components/KRCLogo'
 import {faDocker, faGithub, faGolang, faJava, faJira, faJs, faPython} from '@fortawesome/free-brands-svg-icons';
 
 
-const Languges = [
+const Languages = [
     {
         name: 'Python',
         library: ['Numpy', 'Pandas', 'Selenium', 'BS4'],
@@ -57,14 +57,14 @@ function classNames(...classes: string[]) {
 const Lang_Grid = () => {
     return (
         <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-inherit shadow sm:grid sm:grid-cols-2 sm:gap-1 sm:pb-1 sm:divide-y-0">
-            {Languges.map((lang, langID) => (
+            {Languages.map((lang, langID) => (
                 <div
                     key={lang.name}
                     className={classNames(
                         langID === 0 ? 'rounded-tl-lg rounded-tr-lg sm:rounded-tr-none' : '',
                         langID === 1 ? 'sm:rounded-tr-lg' : '',
-                        langID === Languges.length - 2 ? 'sm:rounded-bl-lg' : '',
-                        langID === Languges.length - 1 ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none' : '',
+                        langID === Languages.length - 2 ? 'sm:rounded-bl-lg' : '',
+                        langID === Languages.length - 1 ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none' : '',
                         'relative group bg-black/30 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
                     )}
                 >
@@ -97,8 +97,6 @@ const Lang_Grid = () => {
                 </div>
             ))}
         </div>
-
-
     )
 }
 
@@ -156,6 +154,26 @@ function BriefcaseIcon(props: BriefcaseIconProps) {
     )
 }
 
+function StarIcon({...props}) {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            {...props}>
+            <path
+                className="fill-zinc-100/10 stroke-zinc-500"
+                d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+            />
+        </svg>
+    )
+
+}
+
+
 function CertHistory() {
     const resume: {
         cert_name: string;
@@ -192,13 +210,12 @@ function CertHistory() {
             issue: 'Aug 2019',
             expire: 'Lifetime',
         },
-
     ]
     return (
         <div className="mt-6 rounded-2xl border p-6 border-zinc-700/40">
             <h2 className="flex text-sm font-semibold text-zinc-100">
-                <BriefcaseIcon className="h-6 w-6 flex-none"/>
-                <span className="ml-3">Certs</span>
+                <StarIcon className="h-6 w-6 flex-none"/>
+                <span className="ml-3">Certifications</span>
             </h2>
             <ol className="mt-6 space-y-4">
                 {resume.map((role, roleIndex) => (
@@ -331,24 +348,21 @@ function WorkHistory() {
 
 export default function Home() {
     return (
-        <>
-            <Container className={`mt-16 sm:t-32`}>
-                <div className={`max-w-2xl`}>
-                    <h1 className={`text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl`}>Student, Lifeguard, Developer and Employable</h1>
+        <Container className={`mt-16 sm:t-32`}>
+            <div className={`max-w-2xl`}>
+                <h1 className={`text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl`}>Student, Lifeguard, Developer and Employable</h1>
 
-                    <p className={`mt-6 text-base text-zinc-400`}>Hello, my name is
-                        <span className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}> Ethan Frigon</span>
-                        . I’m currently a fourth year student at Okanagan College. I have experience implementing concepts learned into usable finished projects.</p>
-                    <br/><h2 className={`py-2 bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold text-2xl sm:text-3xl`}>Strongest Languages & Technologies:</h2>
-                </div>
-                <Lang_Grid/>
-                <Tech_Grid/>
-                <div className={`md:grid md:grid-cols-2 md:gap-1`}>
-                    <WorkHistory/>
-                    <CertHistory/>
-                </div>
-
-            </Container>
-        </>
+                <p className={`mt-6 text-base text-zinc-400`}>Hello, my name is
+                    <span className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}> Ethan Frigon</span>
+                    . I’m currently a fourth year student at Okanagan College. I have experience implementing concepts learned into usable finished projects.</p>
+                <br/><h2 className={`py-2 bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold text-2xl sm:text-3xl`}>Strongest Languages & Technologies:</h2>
+            </div>
+            <Lang_Grid/>
+            <Tech_Grid/>
+            <div className={`md:grid md:grid-cols-2 md:gap-1`}>
+                <WorkHistory/>
+                <CertHistory/>
+            </div>
+        </Container>
     )
 }
