@@ -1,12 +1,24 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
+type Certifications struct {
+	Name                 string `json:"Name"`
+	NlPool               string `json:"National Lifeguard - Pool"`
+	NlWaterpark          string `json:"National Lifeguard - Waterpark"`
+	CprC                 string `json:"CPR-C"`
+	SFA                  string `json:"Standard First Aid"`
+	AED                  string `json:"AED"`
+	LifesavingInstructor string `json:"Lifesaving Instructor"`
+}
 type TicTacHistory struct {
 	PlayerMoves   []move       `json:"playerMoves"`
 	ComputerMoves []move       `json:"computerMoves"`
@@ -58,8 +70,30 @@ func main() {
 			c.JSON(http.StatusOK, requestBody)
 		})
 
-	}
+		api.POST("/certification/", func(c *gin.Context) {
+			//cmd := exec.Command("C://Users//ebfri//Dropbox//coding//personal-website//venv//Scripts//python.exe", "C://Users//ebfri//Dropbox//coding//personal-website//src//server//certificationChecker.py")
+			//out, err := cmd.Output()
 
+			//if err != nil {
+			//	log.Println(err.Error())
+			//	return
+			//}
+
+			jsonString :=
+				`[{"Name":"Ethan Frigon","National Lifeguard - Pool":"16-Jun-2022","National Lifeguard - Waterpark":"26-May-2021","CPR-C":"02-Jun-2022","Standard First Aid":"02-Oct-2022","AED":"02-Jun-2022","Lifesaving Instructor":null},{"Name":"Griffin Bennett","National Lifeguard - Pool":null,"National Lifeguard - Waterpark":null,"CPR-C":"24-Jul-2021","Standard First Aid":"18-Oct-2020","AED":"18-Oct-2020","Lifesaving Instructor":null},{"Name":"Nathan Christophe","National Lifeguard - Pool":null,"National Lifeguard - Waterpark":"24-Oct-2021","CPR-C":"23-Jul-2021","Standard First Aid":"02-Dec-2021","AED":"02-Dec-2021","Lifesaving Instructor":null}]`
+
+			//log.Println(string(out))
+			var jsonData []Certifications
+			errTwo := json.Unmarshal([]byte(jsonString), &jsonData)
+
+			if errTwo != nil {
+				log.Println(errTwo.Error())
+				return
+			}
+			fmt.Println("JSON data: ", jsonData)
+			c.JSON(http.StatusOK, jsonData)
+		})
+	}
 	// Start and run the server
 	if err := router.Run(":5000"); err != nil {
 		return

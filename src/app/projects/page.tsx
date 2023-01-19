@@ -6,7 +6,7 @@ const Projects = [
         title: 'Ultimate TicTacToe',
         href: '/projects/tictactoe',
         description:
-            'This implementation of a Ultimate TicTacToe was originally made in Python then ported to Golang for performance. It has a AI that uses minimax to play against the player. It was able to make it to a gold rank on Codingames.com',
+            'This implementation of a Ultimate TicTacToe was originally made in Python then ported to golang for performance. It has a AI that uses minimax to play against the player. It was able to make it to a gold rank on Codingames.com',
         imageUrl:
             '/static/TicTacToeBoard.png',
 
@@ -21,10 +21,10 @@ const Projects = [
 
     },
     {
-        title: 'Improve your customer experience',
+        title: 'Lifesaving BC/Yukon Cert Checker',
         href: '#',
         description:
-            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint harum rerum voluptatem quo recusandae magni placeat saepe molestiae, sed excepturi cumque corporis perferendis hic.',
+            'This is a application that I made at my previous work to check peoples life guarding certifications. Then putting the certifications into a CSV to later be put into a execl spreadsheet',
         imageUrl:
             'https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
 
