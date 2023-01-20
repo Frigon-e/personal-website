@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
 )
@@ -82,7 +81,7 @@ func bestMove(boardNum int, fullBoard *[9][3][3]int) [2]int {
 			startingScore = checkSingleBoardWinner(fullBoard[boardNum], 0) + evaluateTiles(row, col, fullBoard[boardNum])
 
 			//println()
-			fmt.Printf("Row: %d, Col: %d, Starting Score: %d\n", row, col, startingScore)
+			// fmt.Printf("Row: %d, Col: %d, Starting Score: %d\n", row, col, startingScore)
 			//println()
 
 			score = miniMax(fullBoard[getNextBoard(row, col, false)], 0, false, startingScore, -1000, 1000)

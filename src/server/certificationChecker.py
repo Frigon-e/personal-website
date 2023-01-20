@@ -1,5 +1,3 @@
-#!C:\Program Files\Python311\python.exe
-import datetime
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
@@ -9,7 +7,7 @@ def newest_Cert(certs, dates, certName):
     # Makes list of where dates of same cert are
     indices = [i for i, x in enumerate(certs) if certName in x]
     # returns min date of indices
-    if len(indices) > 1:
+   if len(indices) > 1:
         newDates = [dates[x] for x in indices]
         return min(newDates)
     elif len(indices) == 1:
@@ -49,16 +47,6 @@ class webscraper:
             "AED",
             "Lifesaving Instructor"]
 
-        allCertsTime = [
-            2,
-            2,
-            3,
-            3,
-            3,
-            2
-        ]
-        allCertsVaild = dict(zip(allCerts, allCertsTime))
-
         namelist = []
         for i, id in enumerate(ids):
             cleanDates = []
@@ -79,6 +67,7 @@ class webscraper:
                 namelist.append(name)
                 dirtyCerts = soup.find_all(class_="col-md-6")
             except:
+                print("Error with id: " + id)
                 continue
 
             # https://stackoverflow.com/questions/4664850/how-to-find-all-occurrences-of-a-substring
@@ -106,44 +95,27 @@ class webscraper:
             # rowDataTime = []
             for certNames in allCerts:
                 dateToKeep = newest_Cert(cleanCerts, cleanDates, certNames)
-                # if dateToKeep is not None:
-                #     dateToKeep = datetime.datetime.strptime(dateToKeep, '%d-%b-%Y')
-                #     expireDate = dateToKeep.replace(year=dateToKeep.year + allCertsVaild[certNames])
-                #     currentDate = datetime.datetime.now()
-                #     monthsRem = monthsRemaining(expireDate, currentDate)
-                #     # print("\ngotten date = {} | expire date = {} | rem = {}".format(dateToKeep, expireDate, monthsRem))
-                #     rowDataTime.append("{} months".format(monthsRem))
-                #     dateToKeep = dateToKeep.strftime('%d-%b-%Y')
-                # else:
-                #     rowDataTime.append(dateToKeep)
                 rowData.append(dateToKeep)
 
             columnNames = allCerts
-            # rowData.insert(0, id)
-            # rowDataTime.insert(0, id)
-
-            # columnNames.insert(0, "LSS#")
 
             rowData.insert(0, name)
             # rowDataTime.insert(0, name)
             columnNames.insert(0, "Name")
             if i == 0:
                 self.allStaff = pd.DataFrame([rowData], columns=list(columnNames), index=[id])
-                # self.allStaff2 = pd.DataFrame([rowDataTime], columns=list(columnNames), index=[id])
             else:
                 if columnNames[0] == 'Name' and columnNames[1] == 'Name':
                     columnNames.pop(0)
                     rowData.pop(1)
-                    # rowDataTime.pop(1)
 
                 person = pd.DataFrame([rowData], columns=list(columnNames), index=[id])
-                # personDate = pd.DataFrame([rowDataTime], columns=list(columnNames), index=[id])
 
-                self.allStaff = self.allStaff.loc[~self.allStaff.index.duplicated(keep='first')]
-                self.allStaff = pd.concat([self.allStaff, person], ignore_index=False)
+                self.allStaff = self.allStaff.loc[~self.allStaff.index.duplicated(
+                    keep='first')]
+                self.allStaff = pd.concat(
+                    [self.allStaff, person], ignore_index=False)
 
-                # self.allStaff2 = self.allStaff2.loc[~self.allStaff2.index.duplicated(keep='first')]
-                # self.allStaff2 = pd.concat([self.allStaff2, person], ignore_index=True)
 
     def get_Cols(self):
         return list(self.allStaff.columns.values)
@@ -153,7 +125,6 @@ class webscraper:
 
     def to_Csv(self):
         self.allStaff.to_csv("./certificationCSVs/staffCert.txt", index=True)
-        # self.allStaff2.to_csv("./certificationCSVs/staffCert2.txt", index=True)
 
 
 if __name__ == "__main__":
