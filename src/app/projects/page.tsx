@@ -37,7 +37,7 @@ export default function Page() {
             <div className="relative px-6 pt-16 pb-20 lg:px-8 lg:pb-28">
                 <div className="relative mx-auto max-w-7xl">
                     <div className="text-center">
-                        <h2 className="text-3xl font-bold tracking-tight text-base bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent pb-1 sm:text-4xl">Available Projects</h2>
+                        <h2 className="text-3xl font-bold tracking-tight bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent pb-1 sm:text-4xl">Available Projects</h2>
                         <p className="mx-auto mt-3 max-w-2xl text-xl text-zinc-400 sm:mt-4">
                             These are projects that have been successfully hosted and ported. More are being made available and will be added soon.
                         </p>

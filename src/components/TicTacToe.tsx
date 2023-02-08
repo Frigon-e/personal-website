@@ -150,7 +150,7 @@ export default function TicTacToe() {
         <div className="grid grid-cols-3 gap-2 bg-gradient-to-tr from-emerald-400 to-cyan-500">
           {gameboard.map((board, boardIndex) => (
             <div key={boardIndex} className={classNames(
-              validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-900`,
+              validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-800`,
               `grid grid-flow-row gap-1 bg-zinc-900`)}>
 
               {board.map((row, rowIndex) => (
@@ -161,7 +161,7 @@ export default function TicTacToe() {
                       onClick={() => {
                         handleCellClick(boardIndex, rowIndex, colIndex)
                       }}
-                      className={`h-8 w-8 text-center bg-zinc-900/95 sm:w-12 sm:h-12 lg:w-16 lg:h-16`}>
+                      className={`flex h-8 w-8 text-center items-center justify-center bg-zinc-900/95 sm:w-12 sm:h-12 lg:w-16 lg:h-16`}>
                       {col || ' '}
                     </div>
                   ))}
