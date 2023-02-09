@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -45,8 +44,6 @@ func main() {
 	modCors.AllowAllOrigins = true
 
 	router.Use(cors.New(modCors))
-	// Serve frontend static files
-	router.Use(static.Serve("/", static.LocalFile("./build", true)))
 
 	// Setup route group for the API
 	api := router.Group("/api")
