@@ -9,6 +9,7 @@ export default function TicTacToe() {
   const [gameboard, setGameboard] = useState<(string | null)[][][]>(Array(9).fill(Array(3).fill(Array(3).fill(null))));
   const [playerMoves, setPlayerMoves] = useState<Moves[]>([] as Moves[]);
   const [computerMoves, setComputerMoves] = useState<Moves[]>([] as Moves[]);
+  const [lastCMPMove, setLastCMPMove] = useState({ Board: -1, Row: -1, Col: -1 });
   const [finishedBoards, setFinishedBoards] = useState(Array(3).fill(Array(3).fill(0)));
   const [validMoves, setValidMoves] = useState(Array(3).fill(Array(3).fill(true)));
   const [gameOver, setGameOver] = useState(false);
@@ -46,12 +47,13 @@ export default function TicTacToe() {
 
   const makeComputerMove = () => {
     // Make a post request to the server to get the computer's move
-    //console.log(JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves, "FinishedBoards": finishedBoards, "ValidMoves": validMoves }));
+    console.log(JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves, "FinishedBoards": finishedBoards, "ValidMoves": validMoves }));
     fetch('https://api.frigon-e.ca/api/move/', { body: JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves }), method: 'POST' })
       .then(response =>
         response.json())
       .then(data => {
-        // console.log(data);
+        console.log("Data received from server");
+        console.log(data);
 
         let newComputerMoves: Moves[] = data.computerMoves.map((move: Moves) => ({
           Row: move.Row,
@@ -63,12 +65,13 @@ export default function TicTacToe() {
         setGameOver(data.finishedGame.gameOver);
         setWinner(data.finishedGame.winner);
 
-        if (data.finishedGame.gameOver) {
+        if (data.winner === 'X') {
           return;
         }
 
 
         const computerLastMove = convertToThreeByThree(newComputerMoves[newComputerMoves.length - 1].Row, newComputerMoves[newComputerMoves.length - 1].Col);
+        setLastCMPMove(computerLastMove);
         const playerLastMove = convertToThreeByThree(playerMoves[playerMoves.length - 1].Row, playerMoves[playerMoves.length - 1].Col);
 
         let newGameboard = JSON.parse(JSON.stringify(gameboard));
@@ -77,24 +80,15 @@ export default function TicTacToe() {
 
         let newFinishedBoards = JSON.parse(JSON.stringify(data.finishedGame.completedBoard));
 
-
-        if (JSON.stringify(newFinishedBoards) !== JSON.stringify(finishedBoards)) {
-          setFinishedBoards(newFinishedBoards);
-          for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-              if (newFinishedBoards[i][j] === 1) {
-                newGameboard[computerLastMove.Board] = Array(3).fill(Array(3).fill('O'));
-              } else if (newFinishedBoards[i][j] === 2) {
-                newGameboard[playerLastMove.Board] = Array(3).fill(Array(3).fill('X'));
-              }
-            }
-          }
-        }
-
+        setFinishedBoards(newFinishedBoards);
 
         let newValidMoves = JSON.parse(JSON.stringify(data.validMoves));
         setValidMoves(newValidMoves);
 
+
+        if (data.finishedGame.gameOver) {
+          return;
+        }
 
         setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
         setIsComputer(!isComputer);
@@ -149,25 +143,36 @@ export default function TicTacToe() {
         {isComputer && currentPlayer === 'O' && !gameOver && <p>The computer is making a move...</p>}
         <div className="grid grid-cols-3 gap-2 bg-gradient-to-tr from-emerald-400 to-cyan-500">
           {gameboard.map((board, boardIndex) => (
-            <div key={boardIndex} className={classNames(
-              validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-800`,
-              `grid grid-flow-row gap-1 bg-zinc-900`)}>
+            finishedBoards[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] === 0 ? (
+              <div key={boardIndex} className={classNames(
+                validMoves[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] && !gameOver ? `bg-gradient-to-r from-pink-500 to-rose-500` : `bg-zinc-700`,
+                `grid grid-flow-row gap-1 bg-zinc-900`)}>
 
-              {board.map((row, rowIndex) => (
-                <div key={rowIndex} className={`grid grid-flow-col gap-1`}>
-                  {row.map((col, colIndex) => (
-                    <div
-                      key={colIndex}
-                      onClick={() => {
-                        handleCellClick(boardIndex, rowIndex, colIndex)
-                      }}
-                      className={`flex h-8 w-8 text-center items-center justify-center bg-zinc-900/95 sm:w-12 sm:h-12 lg:w-16 lg:h-16`}>
-                      {col || ' '}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
+                {board.map((row, rowIndex) => (
+                  <div key={rowIndex} className={`grid grid-flow-col gap-1`}>
+                    {row.map((col, colIndex) => (
+                      <div
+                        key={colIndex}
+                        onClick={() => {
+                          handleCellClick(boardIndex, rowIndex, colIndex)
+                        }}
+                        className={classNames(
+                          lastCMPMove.Board != -1 ? (lastCMPMove.Board === boardIndex && lastCMPMove.Row === rowIndex && lastCMPMove.Col === colIndex) ? `border-amber-200/40 border` : `` : ``,
+                          `flex h-8 w-8 text-center items-center justify-center bg-zinc-900/95 sm:w-12 sm:h-12 lg:w-16 lg:h-16`)}>
+                        {col || ' '}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              finishedBoards[Math.floor(boardIndex / 3)][Math.floor(boardIndex % 3)] === 1 ? (
+                <div className={`flex bg-zinc-900 justify-center items-center text-center aspect-square text-8xl sm:text-9xl`}> O </div>
+              ) : (
+                <div className={`flex bg-zinc-900 justify-center items-center text-center aspect-square text-8xl sm:text-9xl`}> X </div>
+              )
+
+            )
           ))}
         </div>
       </div>
