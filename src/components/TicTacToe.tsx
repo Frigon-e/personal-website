@@ -16,7 +16,7 @@ export default function TicTacToe() {
   const [isComputer, setIsComputer] = useState(false);
 
   useEffect(() => {
-    console.log("effect used to set computer");
+    // console.log("effect used to set computer");
 
     if (isComputer && currentPlayer === 'O' && !gameOver) {
       makeComputerMove();
@@ -46,12 +46,12 @@ export default function TicTacToe() {
 
   const makeComputerMove = () => {
     // Make a post request to the server to get the computer's move
-    console.log(JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves, "FinishedBoards": finishedBoards, "ValidMoves": validMoves }));
-    fetch('http://localhost:5000/api/move/', { body: JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves }), method: 'POST' })
+    //console.log(JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves, "FinishedBoards": finishedBoards, "ValidMoves": validMoves }));
+    fetch('https://api.frigon-e.ca/api/move/', { body: JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves }), method: 'POST' })
       .then(response =>
         response.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
 
         let newComputerMoves: Moves[] = data.computerMoves.map((move: Moves) => ({
           Row: move.Row,
