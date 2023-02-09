@@ -36,7 +36,9 @@ func getFinishedBoard(playerMoves []move, computerMoves []move) finishedGame {
 		gameOver = true
 		winner = 2
 	default:
-		winner = 0
+    if winner = 0; !isMovesLeft(finishedBoard) {
+      winner = -1
+    }
 	}
 
 	return finishedGame{CompletedBoard: finishedBoard, GameOver: gameOver, Winner: winner}
