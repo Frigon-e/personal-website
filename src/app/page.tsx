@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import { Container } from '../components/Container';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KRCLogo from '../components/KRCLogo'
 import { faDocker, faGithub, faGolang, faJava, faJira, faJs, faPython } from '@fortawesome/free-brands-svg-icons';
@@ -56,7 +55,7 @@ function classNames(...classes: string[]) {
 
 const Lang_Grid = () => {
   return (
-    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-inherit shadow sm:grid sm:grid-cols-2 sm:gap-1 sm:pb-1 sm:divide-y-0">
+    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-inherit shadow sm:grid sm:grid-cols-2 sm:gap-1 sm:divide-y-0 sm:pb-1">
       {Languages.map((lang, langID) => (
         <div
           key={lang.name}
@@ -65,7 +64,7 @@ const Lang_Grid = () => {
             langID === 1 ? 'sm:rounded-tr-lg' : '',
             langID === Languages.length - 2 ? 'sm:rounded-bl-lg' : '',
             langID === Languages.length - 1 ? 'rounded-bl-lg rounded-br-lg sm:rounded-bl-none' : '',
-            'relative group bg-black/30 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
+            'group relative bg-black/30 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
           )}
         >
           <FontAwesomeIcon icon={lang.icon} className={`h-10 w-10 ` + lang.color} />
@@ -77,7 +76,7 @@ const Lang_Grid = () => {
             </h3>
             <div className="mt-2 text-sm">
               {lang.library.map((lib) => (
-                <span key={lib} className="inline-flex items-center px-2.5 py-0.5 mx-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                <span key={lib} className="mx-0.5 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
                   {lib}
                 </span>
               ))}
@@ -102,14 +101,14 @@ const Lang_Grid = () => {
 
 const Tech_Grid = () => {
   return (
-    <div className="overflow-hidden sm:rounded-lg shadow grid grid-cols-3 border-t border-grey-200 sm:border-none sm:pt-0 sm:gap-1 divide-y-0">
+    <div className="border-grey-200 grid grid-cols-3 divide-y-0 overflow-hidden border-t shadow sm:gap-1 sm:rounded-lg sm:border-none sm:pt-0">
       {Techs.map((tech, techID) => (
         <div
           key={tech.name}
           className={classNames(
             techID === 0 ? 'sm:rounded-tl-2xl sm:rounded-bl-2xl' : '',
             techID === 2 ? 'sm:rounded-tr-2xl sm:rounded-br-2xl' : '',
-            'relative group bg-black/30 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 text-center'
+            'group relative bg-black/30 p-6 text-center focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
           )}
         >
           <FontAwesomeIcon icon={tech.icon} className={`h-10 w-10 mx-auto ` + tech.color} />
@@ -212,7 +211,7 @@ function CertHistory() {
       },
     ]
   return (
-    <div className="mt-6 rounded-2xl border p-6 border-zinc-700/40">
+    <div className="mt-6 rounded-2xl border border-zinc-700/40 p-6">
       <h2 className="flex text-sm font-semibold text-zinc-100">
         <StarIcon className="h-6 w-6 flex-none" />
         <span className="ml-3">Certifications</span>
@@ -221,7 +220,7 @@ function CertHistory() {
         {resume.map((role, roleIndex) => (
           <li key={roleIndex} className="flex gap-4">
             <div
-              className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-zinc-900/5 border border-zinc-700/50 bg-zinc-800 ring-0">
+              className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-zinc-700/50 bg-zinc-800 shadow-md shadow-zinc-800/5 ring-0 ring-zinc-900/5">
               {typeof role.logo === 'string' ? <Image src={role.logo} alt="" width={1000} height={1000} className="h-7 w-7" /> : <KRCLogo />}
 
             </div>
@@ -298,7 +297,7 @@ function WorkHistory() {
       },
     ]
   return (
-    <div className="mt-6 rounded-2xl border p-6 border-zinc-700/40">
+    <div className="mt-6 rounded-2xl border border-zinc-700/40 p-6">
       <h2 className="flex text-sm font-semibold text-zinc-100">
         <BriefcaseIcon className="h-6 w-6 flex-none" />
         <span className="ml-3">Work</span>
@@ -307,7 +306,7 @@ function WorkHistory() {
         {resume.map((role, roleIndex) => (
           <li key={roleIndex} className="flex gap-4">
             <div
-              className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-zinc-900/5 border border-zinc-700/50 bg-zinc-800 ring-0">
+              className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-zinc-700/50 bg-zinc-800 shadow-md shadow-zinc-800/5 ring-0 ring-zinc-900/5">
               {typeof role.logo === 'string' ? <Image src={role.logo} alt="" width={1000} height={1000} className="h-7 w-7" /> : <KRCLogo />}
 
             </div>
@@ -346,7 +345,7 @@ function WorkHistory() {
 
 export default function Home() {
   return (
-    <Container className={`mt-16 sm:t-32`}>
+    <div className={`mt-16 sm:t-32`}>
       <div className={`max-w-2xl`}>
         <h1 className={`text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl`}>Student, Lifeguard, Developer and Employable</h1>
 
@@ -361,6 +360,6 @@ export default function Home() {
         <WorkHistory />
         <CertHistory />
       </div>
-    </Container>
+    </div>
   )
 }

@@ -1,4 +1,3 @@
-import { Container } from "../../../components/Container";
 import TicTacToe from "../../../components/TicTacToe";
 import { v4 as uuid } from "uuid";
 
@@ -6,7 +5,7 @@ function GameDescription() {
   const headers = ['How to win', 'How to play'];
   const descriptions = [['Win by getting 3 in a row in any of the 9 3x3 grids'],
   [['Click on a cell to place your piece.'],
-  ['The next move must be in the grid that corresponds to the cell you clicked on.'],
+  ['The next move must be in the board that corresponds to the cell you clicked on.'],
   ['If the corresponding board is complete you can place on any board']]];
 
   const listItems = headers.map((header, index) => {
@@ -34,10 +33,10 @@ function GameDescription() {
 
 export default function Page() {
   return (
-    <Container>
+      <div className={"pt-16"}>
       <GameDescription />
       <TicTacToe />
-    </Container>
+      </div>
 
   )
 }
