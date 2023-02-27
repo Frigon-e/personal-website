@@ -8,9 +8,6 @@ import { Fragment, useState } from "react";
 
 const projects = [
   { name: "TicTacToe", href: "/projects/tictactoe" },
-  { name: "Dogs", href: "/projects/TicTacToe" },
-  { name: "Cats ", href: "/projects/TicTacToe" },
-  { name: "Crap", href: "/projects/TicTacToe" },
 ]
 
 function NavItem({ href, children }: { href: string, children: React.ReactNode }) {
