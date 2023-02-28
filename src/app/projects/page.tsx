@@ -6,19 +6,28 @@ const Projects = [
     href: '/projects/tictactoe',
     description:
       'This implementation of a Ultimate TicTacToe was originally made in Python then ported to golang for performance.\
-    It has a AI that uses minimax to play against the player. It was able to make it to a gold rank on Codingames.com',
+    It has a AI that uses minimax to play against the player. It was able to make it to a gold rank on Codingames.com.',
     imageUrl:
-      '/static/TicTacToeBoard.png',
+      '/static/project/TicTacToeBoard.png',
 
   },
   {
+    title: 'Scheduler',
+    href: 'https://ukgdisplay.frigon-e.ca/',
+    description:
+        'This is a scheduler that I made for my previous work. It helped to display the schedule for the day \
+        and was primarily used by head lifeguards to schedule breaks.',
+    imageUrl:
+        '/static/project/UKGDisplay.png',
+  },
+  {
     title: 'Battleship',
-    href: '#',
+    href: 'https://github.com/Frigon-e/Battleships',
     description:
       'This Battleship AI is able to win in 44.1 moves on average per 100,000 games. It was made in Java for a school assignment.\
     The average of the class was apx. 47-50 moves.',
     imageUrl:
-      'https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
+      '/static/project/Battleship.png',
 
   },
   {
@@ -26,7 +35,7 @@ const Projects = [
     href: '#',
     description:
       'This is a application that I made at my previous work to check peoples life guarding certifications. \
-    Then putting the certifications into a CSV to later be put into a execl spreadsheet',
+    Then putting the certifications into a CSV to later be put into a execl spreadsheet.',
     imageUrl:
       'https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1679&q=80',
 
