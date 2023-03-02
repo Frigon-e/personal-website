@@ -7,7 +7,7 @@ def newest_Cert(certs, dates, certName):
     # Makes list of where dates of same cert are
     indices = [i for i, x in enumerate(certs) if certName in x]
     # returns min date of indices
-   if len(indices) > 1:
+    if len(indices) > 1:
         newDates = [dates[x] for x in indices]
         return min(newDates)
     elif len(indices) == 1:
@@ -20,7 +20,16 @@ def monthsRemaining(expire, current):
     return (expire.year - current.year) * 12 + expire.month - current.month
 
 
+def get_Certs(ids):
+    tester = webscraper()
+    tester.get_Data(ids)
+    return tester.allStaff.to_json(orient='records')
+
+
 class webscraper:
+
+    def __init__(self):
+        self.allStaff = None
 
     def get_Data(self, ids):
         url = "https://www.lifesaving.bc.ca/_PartialEUmembers"
@@ -116,7 +125,6 @@ class webscraper:
                 self.allStaff = pd.concat(
                     [self.allStaff, person], ignore_index=False)
 
-
     def get_Cols(self):
         return list(self.allStaff.columns.values)
 
@@ -128,12 +136,13 @@ class webscraper:
 
 
 if __name__ == "__main__":
-    ids = [
-        "FRE96F",
-        "BEG92L",
-        "CHN98W"
-    ]
-    tester = webscraper()
-    tester.get_Data(ids)
-    print(tester.allStaff)
-    print(tester.allStaff.to_json(orient='records'))
+    pass
+    # ids = [
+    #     "FRE96F",
+    #     "BEG92L",
+    #     "CHN98W"
+    # ]
+    # tester = webscraper()
+    # tester.get_Data(ids)
+    # print(tester.allStaff)
+    # print(tester.allStaff.to_json(orient='records'))

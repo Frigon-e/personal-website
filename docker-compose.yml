@@ -13,6 +13,6 @@ services:
   backend:
     build: 
       context: ./ 
-      dockerfile: ./server/Dockerfile
+      dockerfile: server/go/Dockerfile
     ports: 
       - 9090:9090
