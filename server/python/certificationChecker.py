@@ -23,6 +23,7 @@ def monthsRemaining(expire, current):
 def get_Certs(ids):
     tester = webscraper()
     tester.get_Data(ids)
+    tester.allStaff['ID'] = tester.allStaff.index
     return tester.allStaff.to_json(orient='records')
 
 

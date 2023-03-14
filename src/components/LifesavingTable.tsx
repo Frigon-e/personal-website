@@ -1,4 +1,5 @@
 export type personCerts = {
+  ID: string;
   Name: string | null;
   "National Lifeguard - Pool": string | null;
   "National Lifeguard - Waterpark": string | null;
@@ -29,19 +30,25 @@ const LifesavingTable = (props : props) => {
                   scope="col"
                   className="sticky top-0 z-10 border-b border-gray-300 text-white py-3.5 pl-4 pr-3 text-sm font-semibold backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
                 >
+                  ID
+                </th>
+                <th
+                  scope="col"
+                  className="sticky top-0 z-10 border-b border-gray-300 text-white py-3.5 pl-4 pr-3 text-sm font-semibold backdrop-blur backdrop-filter sm:pl-6 lg:pl-8"
+                >
                   Name
                 </th>
                 <th
                   scope="col"
                   className="sticky top-0 z-10 hidden border-b border-gray-300 text-white px-3 py-3.5 text-sm font-semibold backdrop-blur backdrop-filter sm:table-cell"
                 >
-                  National Lifeguard - Pool
+                  NL - Pool
                 </th>
                 <th
                   scope="col"
                   className="sticky top-0 z-10 hidden border-b border-gray-300 text-white px-3 py-3.5 text-sm font-semibold backdrop-blur backdrop-filter lg:table-cell"
                 >
-                  National Lifeguard - Waterpark
+                  NL - Waterpark
                 </th>
                 <th
                   scope="col"
@@ -54,7 +61,7 @@ const LifesavingTable = (props : props) => {
                   scope="col"
                   className="sticky top-0 z-10 border-b border-gray-300 text-white px-3 py-3.5 text-sm font-semibold backdrop-blur backdrop-filter"
                 >
-                  Standard First Aid
+                  SFA
                 </th>
 
                 <th
@@ -68,13 +75,21 @@ const LifesavingTable = (props : props) => {
                   scope="col"
                   className="sticky top-0 z-10 border-b border-gray-300 text-white px-3 py-3.5 text-sm font-semibold backdrop-blur backdrop-filter"
                 >
-                  Lifesaving Instructor
+                  LSI
                 </th>
               </tr>
               </thead>
               <tbody>
               {people.map((person, personIdx) => (
                 <tr key={personIdx} className={'text-center'}>
+                  <td
+                    className={classNames(
+                      personIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
+                      'whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-6 lg:pl-8'
+                    )}
+                  >
+                    {person.ID}
+                  </td>
                   <td
                     className={classNames(
                       personIdx !== people.length - 1 ? 'border-b border-gray-200' : '',
