@@ -6,7 +6,7 @@ COPY ./server/*.go /app/main/
 COPY ./server/certificationChecker.py /app/main
 
 RUN go mod download
-Run go mod tidy
+RUN go mod tidy
 RUN go build -o builtexe ./main
 
 EXPOSE 9090
