@@ -1,9 +1,20 @@
-package main
+package tictactoe
 
 import (
 	"math"
 	"math/rand"
 )
+
+type FinishedGame struct {
+	CompletedBoard [3][3]int `json:"completedBoard"`
+	GameOver       bool      `json:"gameOver"`
+	Winner         int       `json:"winner"`
+}
+
+type Move struct {
+	Row int `json:"Row"`
+	Col int `json:"Col"`
+}
 
 var (
 	mainBoard       [9][3][3]int
@@ -11,16 +22,16 @@ var (
 	evaluationBoard [3][3]int
 )
 
-func findMove(playerMoves []move, computerMoves []move) []move {
+func FindMove(playerMoves []Move, computerMoves []Move) []Move {
 	mainBoard = makeMainBoard(playerMoves, computerMoves)
 	finishedBoard = makeFinishedBoard(mainBoard)
 	makeEvaluationBoard()
-	bestSpot := bestMove(getNextBoard(playerMoves[len(playerMoves)-1].Row, playerMoves[len(playerMoves)-1].Col, true), &mainBoard)
-	computerMoves = append(computerMoves, move{Row: bestSpot[0], Col: bestSpot[1]})
+	bestSpot := BestMove(getNextBoard(playerMoves[len(playerMoves)-1].Row, playerMoves[len(playerMoves)-1].Col, true), &mainBoard)
+	computerMoves = append(computerMoves, Move{Row: bestSpot[0], Col: bestSpot[1]})
 	return computerMoves
 }
 
-func getFinishedBoard(playerMoves []move, computerMoves []move) finishedGame {
+func GetFinishedBoard(playerMoves []Move, computerMoves []Move) FinishedGame {
 	mainBoard = makeMainBoard(playerMoves, computerMoves)
 	finishedBoard = makeFinishedBoard(mainBoard)
 
@@ -41,12 +52,12 @@ func getFinishedBoard(playerMoves []move, computerMoves []move) finishedGame {
 		}
 	}
 
-	return finishedGame{CompletedBoard: finishedBoard, GameOver: gameOver, Winner: winner}
+	return FinishedGame{CompletedBoard: finishedBoard, GameOver: gameOver, Winner: winner}
 }
 
-// bestMove calculates the best move for the current player on the specified board in a game of Tic Tac Toe.
-// It returns the best move as a pair of [row, column] coordinates.
-func bestMove(boardNum int, fullBoard *[9][3][3]int) [2]int {
+// BestMove calculates the best Move for the current player on the specified board in a game of Tic Tac Toe.
+// It returns the best Move as a pair of [row, column] coordinates.
+func BestMove(boardNum int, fullBoard *[9][3][3]int) [2]int {
 	// Initialize the best score to the default minimum value.
 	bestScore := []int{int(math.Inf(-1)), int(math.Inf(-1)), int(math.Inf(-1))}
 	//scorePoints := [3][3]int{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}
@@ -86,13 +97,13 @@ func bestMove(boardNum int, fullBoard *[9][3][3]int) [2]int {
 			// fmt.Printf("Row: %d, Col: %d, Starting Score: %d\n", row, col, startingScore)
 			//println()
 
-			score = miniMax(fullBoard[getNextBoard(row, col, false)], 0, false, startingScore, -1000, 1000)
+			score = MiniMax(fullBoard[getNextBoard(row, col, false)], 0, false, startingScore, -1000, 1000)
 			//scorePoints[row][col] = score
 
 			// Undo the current move on the board.
 			fullBoard[boardNum][row][col] = 0
 
-			// Calculate the score for the current move by calling the miniMax function.
+			// Calculate the score for the current move by calling the MiniMax function.
 
 			//fmt.Printf("Row: %d, Col: %d, After Score: %d", row, col, score)
 			if score == bestScore[0] {
@@ -117,7 +128,7 @@ func bestMove(boardNum int, fullBoard *[9][3][3]int) [2]int {
 	return [2]int{bestScore[1], bestScore[2]}
 }
 
-func miniMax(board [3][3]int, depth int, isMaxPlayer bool, currentSum int, alpha int, beta int) int {
+func MiniMax(board [3][3]int, depth int, isMaxPlayer bool, currentSum int, alpha int, beta int) int {
 	// time.Sleep(100 * time.Millisecond)
 
 	// Check if the current game board is in a terminal state (i.e. a player has won or there are no more moves)
@@ -143,11 +154,12 @@ func miniMax(board [3][3]int, depth int, isMaxPlayer bool, currentSum int, alpha
 				continue
 			}
 
-			// Make the move and call the miniMax function recursively to evaluate the potential outcome.
-			if board[row][col] = 2; isMaxPlayer {
+			// Make the move and call the MiniMax function recursively to evaluate the potential outcome.
+			board[row][col] = 2
+			if isMaxPlayer {
 				board[row][col] = 1
 			}
-			score := miniMax(mainBoard[getNextBoard(row, col, !isMaxPlayer)], depth+1, !isMaxPlayer, currentSum, alpha, beta) + evaluateTiles(row, col, board)
+			score := MiniMax(mainBoard[getNextBoard(row, col, !isMaxPlayer)], depth+1, !isMaxPlayer, currentSum, alpha, beta) + evaluateTiles(row, col, board)
 
 			// Undo the move.
 			board[row][col] = 0
@@ -202,7 +214,7 @@ func miniMax(board [3][3]int, depth int, isMaxPlayer bool, currentSum int, alpha
 //	println()
 //	print("Timer started")
 //	start := time.Now()
-//	bestSpot := bestMove(getNextBoard(playerMoves[len(playerMoves)-1].Row, playerMoves[len(playerMoves)-1].Col, true), &mainBoard)
+//	bestSpot := BestMove(getNextBoard(playerMoves[len(playerMoves)-1].Row, playerMoves[len(playerMoves)-1].Col, true), &mainBoard)
 //	fmt.Printf("best spot: %v", bestSpot)
 //	computerMoves = append(computerMoves, move{Row: bestSpot[0], Col: bestSpot[1]})
 //	println()

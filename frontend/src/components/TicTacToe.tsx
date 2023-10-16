@@ -48,7 +48,7 @@ export default function TicTacToe() {
   const makeComputerMove = () => {
     // Make a post request to the server to get the computer's move
     console.log(JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves, "FinishedBoards": finishedBoards, "ValidMoves": validMoves }));
-    fetch('https://api.frigon-e.ca/api/move/', { body: JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves }), method: 'POST' })
+    fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/ttt/move/', { body: JSON.stringify({ "ComputerMoves": computerMoves, "PlayerMoves": playerMoves }), method: 'POST' })
       .then(response =>
         response.json())
       .then(data => {

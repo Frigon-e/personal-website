@@ -1,4 +1,4 @@
-package main
+package tictactoe
 
 import (
 	"fmt"
@@ -88,7 +88,7 @@ func isMovesLeft(miniBoard [3][3]int) bool {
 	return false
 }
 
-func makeMainBoard(playerMoves []move, computerMoves []move) [9][3][3]int {
+func makeMainBoard(playerMoves []Move, computerMoves []Move) [9][3][3]int {
 	var newBoard [9][3][3]int
 	for miniBoardNum := 0; miniBoardNum < 9; miniBoardNum++ {
 		for rowIndex := 0; rowIndex < 3; rowIndex++ {
@@ -166,7 +166,7 @@ func getRowColFlattenBoard(num int) [2]int {
 	return [2]int{newRow, newCol}
 }
 
-func getValidBoards(currentRow int, currentCol int, finishedBoard [3][3]int) [3][3]bool {
+func GetValidBoards(currentRow int, currentCol int, finishedBoard [3][3]int) [3][3]bool {
 	validBoards := [3][3]bool{{false, false, false}, {false, false, false}, {false, false, false}}
 	newRow := currentRow % 3
 	newCol := currentCol % 3

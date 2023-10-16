@@ -1,13 +1,21 @@
 FROM golang:latest
 
+# Set the working directory inside the container
 WORKDIR /app
-COPY go.mod/ ./
-COPY ./server/*.go /app/main/
-COPY ./server/certificationChecker.py /app/main
+
+# Copy go.mod and go.sum files to the container
+COPY go.mod ./
+
+# Copy the entire project directory into the container
+COPY . .
 
 RUN go mod download
 RUN go mod tidy
-RUN go build -o builtexe ./main
+
+
+ENV GIN_MODE=release
+
+RUN go build -o builtexe ./golang/
 
 EXPOSE 9090
 

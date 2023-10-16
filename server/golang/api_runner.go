@@ -7,6 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"server/golang/battleship"
+	tictactoe "server/golang/tictactoe"
 )
 
 type Certifications struct {
@@ -19,25 +21,21 @@ type Certifications struct {
 	LifesavingInstructor string `json:"Lifesaving Instructor"`
 }
 type TicTacHistory struct {
-	PlayerMoves   []move       `json:"playerMoves"`
-	ComputerMoves []move       `json:"computerMoves"`
-	ValidMoves    [3][3]bool   `json:"validMoves"`
-	FinishedGame  finishedGame `json:"finishedGame"`
+	PlayerMoves   []tictactoe.Move       `json:"playerMoves"`
+	ComputerMoves []tictactoe.Move       `json:"computerMoves"`
+	ValidMoves    [3][3]bool             `json:"validMoves"`
+	FinishedGame  tictactoe.FinishedGame `json:"finishedGame"`
 }
 
-type finishedGame struct {
-	CompletedBoard [3][3]int `json:"completedBoard"`
-	GameOver       bool      `json:"gameOver"`
-	Winner         int       `json:"winner"`
-}
-
-type move struct {
-	Row int `json:"Row"`
-	Col int `json:"Col"`
+type BattleshipHistory struct {
+	PlayerMoves   []battleship.Move `json:"playerMoves"`
+	ComputerMoves []battleship.Move `json:"computerMoves"`
 }
 
 func main() {
 	// Set the router as the default one shipped with Gin
+	gin.SetMode(gin.DebugMode)
+
 	router := gin.Default()
 	modCors := cors.DefaultConfig()
 
@@ -52,19 +50,31 @@ func main() {
 		// maps the json object to a TIcTacHistory struct
 		// returns with a json object containing the player and computer moves
 
-		api.POST("/move/", func(c *gin.Context) {
+		api.POST("/ttt/move/", func(c *gin.Context) {
 			requestBody := new(TicTacHistory)
 
 			if err := c.BindJSON(&requestBody); err != nil {
 				println(err)
 			}
 
-			requestBody.ComputerMoves = findMove(requestBody.PlayerMoves, requestBody.ComputerMoves)
-			requestBody.FinishedGame = getFinishedBoard(requestBody.PlayerMoves, requestBody.ComputerMoves)
+			requestBody.ComputerMoves = tictactoe.FindMove(requestBody.PlayerMoves, requestBody.ComputerMoves)
+			requestBody.FinishedGame = tictactoe.GetFinishedBoard(requestBody.PlayerMoves, requestBody.ComputerMoves)
 			lastComputerMove := requestBody.ComputerMoves[len(requestBody.ComputerMoves)-1]
-			requestBody.ValidMoves = getValidBoards(lastComputerMove.Row, lastComputerMove.Col, requestBody.FinishedGame.CompletedBoard)
+			requestBody.ValidMoves = tictactoe.GetValidBoards(lastComputerMove.Row, lastComputerMove.Col, requestBody.FinishedGame.CompletedBoard)
 
 			c.JSON(http.StatusOK, requestBody)
+		})
+
+		api.POST("/bs/move/", func(c *gin.Context) {
+			requestBody := new(BattleshipHistory)
+
+			if err := c.BindJSON(&requestBody); err != nil {
+				println(err)
+			}
+
+			battleship.FindMove(requestBody.PlayerMoves, requestBody.ComputerMoves)
+
+			c.AbortWithStatus(http.StatusOK)
 		})
 
 		api.POST("/certification/", func(c *gin.Context) {
