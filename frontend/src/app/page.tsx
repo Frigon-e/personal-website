@@ -1,13 +1,21 @@
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import KRCLogo from '../components/KRCLogo'
-import { faDocker, faGithub, faGolang, faJava, faJira, faJs, faPython } from '@fortawesome/free-brands-svg-icons';
+import {
+  faDocker,
+  faGithub,
+  faGolang,
+  faJava,
+  faJira,
+  faJs,
+  faPython
+} from '@fortawesome/free-brands-svg-icons';
 
 
 const Languages = [
   {
     name: 'Python',
-    library: ['Numpy', 'Pandas', 'Selenium', 'BS4'],
+    library: ['Django', 'Numpy', 'Pandas', 'Flask'],
     icon: faPython,
     color: 'text-yellow-300',
   },
@@ -19,7 +27,7 @@ const Languages = [
   },
   {
     name: 'Typescript',
-    library: ['React', 'Next.js', 'Tailwind'],
+    library: ['React', 'React Native', 'Next.js', 'Tailwind', "Redux"],
     icon: faJs,
     color: 'text-blue-400',
   },
@@ -55,7 +63,8 @@ function classNames(...classes: string[]) {
 
 const Lang_Grid = () => {
   return (
-    <div className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-inherit shadow sm:grid sm:grid-cols-2 sm:gap-1 sm:divide-y-0 sm:pb-1">
+    <div
+      className="divide-y divide-gray-200 overflow-hidden rounded-lg bg-inherit shadow sm:grid sm:grid-cols-2 sm:gap-1 sm:divide-y-0 sm:pb-1">
       {Languages.map((lang, langID) => (
         <div
           key={lang.name}
@@ -67,31 +76,34 @@ const Lang_Grid = () => {
             'group relative bg-black/30 p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
           )}
         >
-          <FontAwesomeIcon icon={lang.icon} className={`h-10 w-10 ` + lang.color} />
+          <FontAwesomeIcon icon={lang.icon}
+                           className={`h-10 w-10 ` + lang.color}/>
           <div className="mt-4">
             <h3 className="text-lg font-medium">
               {/* Extend touch target to entire panel */}
-              <span className="absolute inset-0" aria-hidden="true" />
+              <span className="absolute inset-0" aria-hidden="true"/>
               {lang.name}
             </h3>
             <div className="mt-2 text-sm">
               {lang.library.map((lib) => (
-                <span key={lib} className="mx-0.5 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
+                <span key={lib}
+                      className="mx-0.5 inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-800">
                   {lib}
                 </span>
               ))}
 
             </div>
           </div>
-          <span
-            className="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"
-            aria-hidden="true"
-          >
-            <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
-            </svg>
-          </span>
+          {/*<span*/}
+          {/*  className="pointer-events-none absolute top-6 right-6 text-gray-300 group-hover:text-gray-400"*/}
+          {/*  aria-hidden="true"*/}
+          {/*>*/}
+          {/*  <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg"*/}
+          {/*       fill="currentColor" viewBox="0 0 24 24">*/}
+          {/*    <path*/}
+          {/*      d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z"/>*/}
+          {/*  </svg>*/}
+          {/*</span>*/}
 
         </div>
       ))}
@@ -101,7 +113,8 @@ const Lang_Grid = () => {
 
 const Tech_Grid = () => {
   return (
-    <div className="border-grey-200 grid grid-cols-3 divide-y-0 overflow-hidden border-t shadow sm:gap-1 sm:rounded-lg sm:border-none sm:pt-0">
+    <div
+      className="border-grey-200 grid grid-cols-3 divide-y-0 overflow-hidden border-t shadow sm:gap-1 sm:rounded-lg sm:border-none sm:pt-0">
       {Techs.map((tech, techID) => (
         <div
           key={tech.name}
@@ -111,11 +124,12 @@ const Tech_Grid = () => {
             'group relative bg-black/30 p-6 text-center focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500'
           )}
         >
-          <FontAwesomeIcon icon={tech.icon} className={`h-10 w-10 mx-auto ` + tech.color} />
+          <FontAwesomeIcon icon={tech.icon}
+                           className={`h-10 w-10 mx-auto ` + tech.color}/>
           <div className="mt-4">
             <h3 className="text-lg font-medium">
               {/* Extend touch target to entire panel */}
-              <span className="absolute inset-0" aria-hidden="true" />
+              <span className="absolute inset-0" aria-hidden="true"/>
               {tech.name}
             </h3>
           </div>
@@ -153,7 +167,7 @@ function BriefcaseIcon(props: BriefcaseIconProps) {
   )
 }
 
-function StarIcon({ ...props }) {
+function StarIcon({...props}) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -181,39 +195,39 @@ function CertHistory() {
     issue: string | { label: string; dateTime: number };
     expire: string | { label: string; dateTime: number };
   }[] = [
-      {
-        cert_name: 'SFA/CPR-C [OFA1] ',
-        cert_company: 'Lifesaving Society',
-        logo: '/static/logo/lifesavingsocietyIcon.png',
-        issue: "Oct 2022",
-        expire: "Oct 2025"
-      },
-      {
-        cert_name: 'National Lifeguard Pool',
-        cert_company: 'Lifesaving Society',
-        logo: '/static/logo/lifesavingsocietyIcon.png',
-        issue: 'Jun 2022',
-        expire: 'Jun 2024',
-      },
-      {
-        cert_name: 'National Lifeguard Waterpark',
-        cert_company: 'Lifesaving Society',
-        logo: '/static/logo/lifesavingsocietyIcon.png',
-        issue: 'May 2021',
-        expire: 'May 2023',
-      },
-      {
-        cert_name: 'RCA Coach',
-        cert_company: 'Rowing Canada',
-        logo: '/static/logo/RCAIcon.png',
-        issue: 'Aug 2019',
-        expire: 'Lifetime',
-      },
-    ]
+    {
+      cert_name: 'SFA/CPR-C [OFA1] ',
+      cert_company: 'Lifesaving Society',
+      logo: '/static/logo/lifesavingsocietyIcon.png',
+      issue: "Oct 2022",
+      expire: "Oct 2025"
+    },
+    {
+      cert_name: 'National Lifeguard Pool',
+      cert_company: 'Lifesaving Society',
+      logo: '/static/logo/lifesavingsocietyIcon.png',
+      issue: 'Jun 2022',
+      expire: 'Jun 2024',
+    },
+    // {
+    //   cert_name: 'National Lifeguard Waterpark',
+    //   cert_company: 'Lifesaving Society',
+    //   logo: '/static/logo/lifesavingsocietyIcon.png',
+    //   issue: 'May 2021',
+    //   expire: 'May 2023',
+    // },
+    {
+      cert_name: 'RCA Coach',
+      cert_company: 'Rowing Canada',
+      logo: '/static/logo/RCAIcon.png',
+      issue: 'Aug 2019',
+      expire: 'Lifetime',
+    },
+  ]
   return (
     <div className="mt-6 rounded-2xl border border-zinc-700/40 p-6">
       <h2 className="flex text-sm font-semibold text-zinc-100">
-        <StarIcon className="h-6 w-6 flex-none" />
+        <StarIcon className="h-6 w-6 flex-none"/>
         <span className="ml-3">Certifications</span>
       </h2>
       <ol className="mt-6 space-y-4">
@@ -221,12 +235,15 @@ function CertHistory() {
           <li key={roleIndex} className="flex gap-4">
             <div
               className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-zinc-700/50 bg-zinc-800 shadow-md shadow-zinc-800/5 ring-0 ring-zinc-900/5">
-              {typeof role.logo === 'string' ? <Image src={role.logo} alt="" width={1000} height={1000} className="h-7 w-7" /> : <KRCLogo />}
+              {typeof role.logo === 'string' ?
+                <Image src={role.logo} alt="" width={1000} height={1000}
+                       className="h-7 w-7"/> : <KRCLogo/>}
 
             </div>
             <dl className="flex flex-auto flex-wrap gap-x-2">
               <dt className="sr-only">Cert Name</dt>
-              <dd className="w-full flex-none text-sm font-medium text-zinc-100">
+              <dd
+                className="w-full flex-none text-sm font-medium text-zinc-100">
                 {role.cert_name}
               </dd>
               <dt className="sr-only">Cert Company</dt>
@@ -237,14 +254,16 @@ function CertHistory() {
               <dd
                 className="ml-auto text-xs text-zinc-500"
                 aria-label={`${typeof role.issue !== "string" ? role.issue.label : role.issue} until ${typeof role.expire !== "string" ? role.expire.label : role.expire
-                  }`}
+                }`}
               >
-                <time dateTime={typeof role.issue !== "string" ? String(role.issue.dateTime) : role.issue}>
+                <time
+                  dateTime={typeof role.issue !== "string" ? String(role.issue.dateTime) : role.issue}>
                   {typeof role.issue !== "string" ? role.issue.label : role.issue}
                 </time>
                 {' '}
                 <span aria-hidden="true">—</span>{' '}
-                <time dateTime={typeof role.expire !== "string" ? String(role.expire.dateTime) : role.expire}>
+                <time
+                  dateTime={typeof role.expire !== "string" ? String(role.expire.dateTime) : role.expire}>
                   {typeof role.expire !== "string" ? role.expire.label : role.expire}
                 </time>
               </dd>
@@ -264,42 +283,32 @@ function WorkHistory() {
     start: string | { label: string; dateTime: number };
     end: string | { label: string; dateTime: number };
   }[] = [
-      {
-        company: 'YMCA of Southern Interior',
-        title: 'Head Lifeguard',
-        logo: '/static/logo/YMCALogo.png',
-        start: '2017',
-        end: {
-          label: 'Present',
-          dateTime: new Date().getFullYear(),
-        },
-      },
-      {
-        company: 'Kelowna Rowing Club',
-        title: 'Head Coach',
-        logo: KRCLogo,
-        start: '2018',
-        end: '2021',
-      },
-      {
-        company: 'Tim Hortons',
-        title: 'Baker',
-        logo: '/static/logo/TimHortonsLogo.png',
-        start: '2015',
-        end: '2017',
-      },
-      {
-        company: 'Central Okanagan Soccer Association',
-        title: 'District Referee',
-        logo: '/static/logo/COYSALogo.png',
-        start: '2012',
-        end: '2014',
-      },
-    ]
+    {
+      company: 'Dvele',
+      title: 'Web Application Developer',
+      logo: '/static/logo/DveleLogo.png',
+      start: 'Mid-2023',
+      end: 'Present'
+    },
+    {
+      company: 'YMCA of Southern Interior',
+      title: 'Head Lifeguard',
+      logo: '/static/logo/YMCALogo.png',
+      start: '2017',
+      end: 'Mid-2023'
+    },
+    {
+      company: 'Kelowna Rowing Club',
+      title: 'Head Coach',
+      logo: KRCLogo,
+      start: '2018',
+      end: '2021',
+    },
+  ]
   return (
     <div className="mt-6 rounded-2xl border border-zinc-700/40 p-6">
       <h2 className="flex text-sm font-semibold text-zinc-100">
-        <BriefcaseIcon className="h-6 w-6 flex-none" />
+        <BriefcaseIcon className="h-6 w-6 flex-none"/>
         <span className="ml-3">Work</span>
       </h2>
       <ol className="mt-6 space-y-4">
@@ -307,12 +316,15 @@ function WorkHistory() {
           <li key={roleIndex} className="flex gap-4">
             <div
               className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full border border-zinc-700/50 bg-zinc-800 shadow-md shadow-zinc-800/5 ring-0 ring-zinc-900/5">
-              {typeof role.logo === 'string' ? <Image src={role.logo} alt="" width={1000} height={1000} className="h-7 w-7" /> : <KRCLogo />}
+              {typeof role.logo === 'string' ?
+                <Image src={role.logo} alt="" width={1000} height={1000}
+                       className="h-7 w-7"/> : <KRCLogo/>}
 
             </div>
             <dl className="flex flex-auto flex-wrap gap-x-2">
               <dt className="sr-only">Company</dt>
-              <dd className="w-full flex-none text-sm font-medium text-zinc-100">
+              <dd
+                className="w-full flex-none text-sm font-medium text-zinc-100">
                 {role.company}
               </dd>
               <dt className="sr-only">Role</dt>
@@ -323,14 +335,16 @@ function WorkHistory() {
               <dd
                 className="ml-auto text-xs text-zinc-500"
                 aria-label={`${typeof role.start !== "string" ? role.start.label : role.start} until ${typeof role.end !== "string" ? role.end.label : role.end
-                  }`}
+                }`}
               >
-                <time dateTime={typeof role.start !== "string" ? String(role.start.dateTime) : role.start}>
+                <time
+                  dateTime={typeof role.start !== "string" ? String(role.start.dateTime) : role.start}>
                   {typeof role.start !== "string" ? role.start.label : role.start}
                 </time>
                 {' '}
                 <span aria-hidden="true">—</span>{' '}
-                <time dateTime={typeof role.end !== "string" ? String(role.end.dateTime) : role.end}>
+                <time
+                  dateTime={typeof role.end !== "string" ? String(role.end.dateTime) : role.end}>
                   {typeof role.end !== "string" ? role.end.label : role.end}
                 </time>
               </dd>
@@ -347,18 +361,23 @@ export default function Home() {
   return (
     <div className={`mt-16 sm:t-32`}>
       <div className={`max-w-2xl`}>
-        <h1 className={`text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl`}>Student, Lifeguard, Developer and Employable</h1>
+        <h1
+          className={`text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl`}>Full Stack Developer and Employable</h1>
 
         <p className={`mt-6 text-base text-zinc-400`}>Hello, my name is
-          <span className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}> Ethan Frigon</span>
-          . I’m currently a fourth year student at Okanagan College. I have experience implementing concepts learned into usable finished projects.</p>
-        <br /><h2 className={`py-2 bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold text-2xl sm:text-3xl`}>Strongest Languages & Technologies:</h2>
+          <span
+            className={`bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold`}> Ethan Frigon</span>
+          . I’m currently working as a full stack software developer at Dvele
+          where we build pre-fabricated smart green homes.</p>
+        <br/><h2
+        className={`py-2 bg-gradient-to-tr from-emerald-400 to-cyan-500 bg-clip-text text-transparent font-bold text-2xl sm:text-3xl`}>Strongest
+        Languages & Technologies:</h2>
       </div>
-      <Lang_Grid />
-      <Tech_Grid />
+      <Lang_Grid/>
+      <Tech_Grid/>
       <div className={`md:grid md:grid-cols-2 md:gap-1`}>
-        <WorkHistory />
-        <CertHistory />
+        <WorkHistory/>
+        <CertHistory/>
       </div>
     </div>
   )
