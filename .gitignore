@@ -31,7 +31,6 @@ yarn-error.log*
 
 # local env files
 frontend/.env
-frontend/.env
 !.env*.example
 
 # vercel
