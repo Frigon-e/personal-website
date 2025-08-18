@@ -2,17 +2,11 @@ version: "3.8"
 
 services:
   frontend:
-    build: 
-      context: ./ 
-      dockerfile: frontend/src/Dockerfile
-    ports: 
-      - 3000:3000
-    depends_on: 
-      - backend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
 
-  backend:
-    build: 
-      context: ./ 
-      dockerfile: ./server/Dockerfile
-    ports: 
-      - 9090:9090
+
+

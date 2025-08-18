@@ -1,4 +1,9 @@
-.react-router
-build
+# Prevent copying unnecessary/broken files into Docker context
 node_modules
-README.md
+build
+dist
+coverage
+.git
+.gitignore
+.vscode
+npm-debug.log*
