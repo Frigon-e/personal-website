@@ -1,0 +1,9 @@
+# Prevent copying unnecessary/broken files into Docker context
+node_modules
+build
+dist
+coverage
+.git
+.gitignore
+.vscode
+npm-debug.log*
