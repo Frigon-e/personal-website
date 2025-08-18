@@ -1,30 +1,22 @@
-# Build deps layer for caching
-FROM node:20-alpine AS deps
+FROM node:20-alpine AS development-dependencies-env
+COPY . /app
 WORKDIR /app
-COPY package.json package-lock.json ./
 RUN npm ci
 
-# Build the app with dev dependencies
-FROM node:20-alpine AS build
+FROM node:20-alpine AS production-dependencies-env
+COPY ./package.json package-lock.json /app/
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
-COPY . .
-RUN npm run build
-
-# Install only production dependencies for runtime
-FROM node:20-alpine AS prod-deps
-WORKDIR /app
-COPY package.json package-lock.json ./
 RUN npm ci --omit=dev
 
-# Final runtime image
-FROM node:20-alpine
-ENV NODE_ENV=production
-ENV PORT=3000
-ENV HOST=0.0.0.0
+FROM node:20-alpine AS build-env
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
 WORKDIR /app
-COPY package.json package-lock.json ./
-COPY --from=prod-deps /app/node_modules ./node_modules
-COPY --from=build /app/build ./build
-EXPOSE 3000
+RUN npm run build
+
+FROM node:20-alpine
+COPY ./package.json package-lock.json /app/
+COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+COPY --from=build-env /app/build /app/build
+WORKDIR /app
 CMD ["npm", "run", "start"]

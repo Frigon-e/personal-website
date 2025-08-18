@@ -1,0 +1,19 @@
+# Global ignores for root build context
+# Keep this minimal to avoid breaking other services that build from root
+
+**/node_modules
+**/build
+**/dist
+**/coverage
+
+# OS/editor noise
+**/.DS_Store
+.vscode
+
+# VCS
+.git
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*
