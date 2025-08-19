@@ -5,6 +5,13 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.personalsite-secure.rule=Host(`personal-site.frigon-e.ca`)"
+      - "traefik.http.routers.personalsite-secure.entrypoints=websecure"
+      - "traefik.http.routers.personalsite-secure.tls.certresolver=dns_resolver"
+      - "traefik.http.services.personalsite-svc.loadbalancer.server.port=3000"
+      - "traefik.http.routers.personalsite-secure.service=personalsite-svc"
     ports:
       - "3000:3000"
 
