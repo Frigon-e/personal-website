@@ -3,8 +3,14 @@ version: "3.8"
 services:
   frontend:
     build:
-      context: ./
-      dockerfile: frontend/Dockerfile
+      context: frontend
+      dockerfile: Dockerfile
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mysite.rule=Host(`personal-site.frigon-e.ca`)"
+      - "traefik.http.routers.mysite.entrypoints=websecure"
+      - "traefik.http.routers.mysite.tls.certresolver=dns_resolver"
+      - "traefik.http.services.mysite.loadbalancer.server.port=80"
     ports:
       - "3000:3000"
 
