@@ -16,7 +16,7 @@ import { projects, workExperiences, education } from "~/data/site-data";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
-  { rel: "alternate icon", href: "/favicon.ico", type: "image/x-icon" },
+  // { rel: "alternate icon", href: "/favicon.ico", type: "image/x-icon" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
