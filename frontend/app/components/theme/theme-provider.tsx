@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useLayoutEffect, useMemo, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -10,15 +10,29 @@ type ThemeContextValue = {
 
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
+function readCookieTheme(): Theme | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(/(?:^|; )theme=(light|dark)/);
+  return match ? (match[1] as Theme) : null;
+}
+
+function writeCookieTheme(t: Theme) {
+  try {
+    const oneYear = 60 * 60 * 24 * 365;
+    document.cookie = `theme=${t}; Path=/; Max-Age=${oneYear}; SameSite=Lax`;
+  } catch {}
+}
+
 function getPreferredTheme(): Theme {
   try {
+    const cookie = readCookieTheme();
+    if (cookie === "light" || cookie === "dark") return cookie;
     const stored = localStorage.getItem("theme");
     if (stored === "light" || stored === "dark") return stored;
   } catch {}
   if (typeof window !== "undefined" && window.matchMedia) {
-    // Prefer dark if available
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return prefersDark ? "dark" : "dark"; // prefers dark by default
+    return prefersDark ? "dark" : "light";
   }
   return "dark";
 }
@@ -30,22 +44,25 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const root = document.documentElement;
     if (t === "dark") {
       root.classList.add("dark");
+      (root.style as any).colorScheme = 'dark';
     } else {
       root.classList.remove("dark");
+      (root.style as any).colorScheme = 'light';
     }
   }, []);
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
     try { localStorage.setItem("theme", t); } catch {}
+    writeCookieTheme(t);
     applyThemeClass(t);
   }, [applyThemeClass]);
 
   const toggleTheme = useCallback(() => {
-    setTheme(prev => prev === "dark" ? "light" : "dark");
-  }, [setTheme]);
+    setTheme(theme === "dark" ? "light" : "dark");
+  }, [setTheme, theme]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     applyThemeClass(theme);
   }, [theme, applyThemeClass]);
 

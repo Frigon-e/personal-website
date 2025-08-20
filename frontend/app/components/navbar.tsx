@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import { ModeToggle } from "~/components/theme/mode-toggle";
-import { Button } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 
 const navItems = [
   { to: "/", label: "Home" },
@@ -30,9 +30,15 @@ export function Navbar() {
         </nav>
         <div className="flex items-center gap-2">
           <ModeToggle />
-          <Button variant="outline" size="sm">
-            <a href="/resume.pdf">Resume</a>
-          </Button>
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open resume in a new tab"
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            Resume
+          </a>
         </div>
       </div>
     </header>

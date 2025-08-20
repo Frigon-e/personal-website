@@ -18,7 +18,7 @@ function renderWithRouter(ui: React.ReactElement) {
 describe('Welcome', () => {
   it('renders main sections', async () => {
     renderWithRouter(<Welcome />);
-    expect(await screen.findByText(/my skill-set/i)).toBeInTheDocument();
+    expect(await screen.findByText(/Skills/i)).toBeInTheDocument();
     expect(screen.getByText(/featured\s+projects/i)).toBeInTheDocument();
     expect(screen.getByText(/work experience/i)).toBeInTheDocument();
   });

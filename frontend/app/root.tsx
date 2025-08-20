@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 import { ThemeProvider } from "~/components/theme/theme-provider";
 import { Navbar } from "~/components/navbar";
@@ -14,7 +15,9 @@ import "./app.css";
 import { projects, workExperiences, education } from "~/data/site-data";
 
 export const links: Route.LinksFunction = () => [
-  {rel: "preconnect", href: "https://fonts.googleapis.com"},
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  { rel: "alternate icon", href: "/favicon.ico", type: "image/x-icon" },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
@@ -26,17 +29,28 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export async function loader() {
-  return {projects, workExperiences, education};
+function parseCookieTheme(cookieHeader?: string | null): 'light' | 'dark' | null {
+  if (!cookieHeader) return null;
+  const match = cookieHeader.match(/(?:^|; )theme=(light|dark)/);
+  return match ? (match[1] as 'light' | 'dark') : null;
+}
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const initialTheme = parseCookieTheme(request.headers.get('cookie')) ?? null;
+  return { projects, workExperiences, education, initialTheme };
 }
 
 export function Layout({children}: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+  const theme = data?.initialTheme ?? null;
+  const isDark = theme ? theme === 'dark' : true;
   return (
-    <html lang="en">
+    <html lang="en" className={isDark ? 'dark' : undefined} style={{ colorScheme: isDark ? 'dark' as const : 'light' as const }}>
     <head>
-      <title>React Router</title>
+      <title>Ethan Frigon — Portfolio</title>
       <meta charSet="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <meta name="color-scheme" content="dark light" />
       <Meta/>
       <Links/>
     </head>

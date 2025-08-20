@@ -16,6 +16,14 @@ import {
 } from "~/components/ui/tooltip";
 import { useSiteData } from "~/hooks/useSiteData";
 import { GraduationCap } from "lucide-react";
+import { Link } from "react-router";
+
+function slugify(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
 export function Welcome() {
   return (
@@ -195,12 +203,12 @@ function ProjectCards() {
             <CardContent className="flex flex-col items-center gap-2">
               <h3 className="text-lg">{project.name}</h3>
               <p>{project.description}</p>
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
+              <Link to={`/projects#${slugify(project.name)}`}>
                 <button
                   className="bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-4 focus:outline-none focus:ring-primary/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                  More
+                  View details
                 </button>
-              </a>
+              </Link>
             </CardContent>
           </Card>
         ))}

@@ -1,8 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { useSiteData } from "~/hooks/useSiteData";
 import { Button } from "~/components/ui/button";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+
+// Create a stable slug for anchor ids
+function slugify(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
 
 export function meta() {
   return [
@@ -16,6 +25,19 @@ export default function ProjectsPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [projectIdx, setProjectIdx] = useState<number>(0);
   const [imageIdx, setImageIdx] = useState<number>(0);
+  const location = useLocation();
+
+  // Scroll to project when visiting /projects#slug or /project#slug
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const hash = location.hash?.replace(/^#/, "");
+    if (hash) {
+      const el = document.getElementById(hash);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  }, [location.hash]);
 
   const openLightbox = (pIdx: number, iIdx: number) => {
     setProjectIdx(pIdx);
@@ -54,12 +76,12 @@ export default function ProjectsPage() {
       <h1 className="text-3xl font-bold mb-6">Projects</h1>
       <p className="text-muted-foreground mb-4">A selection of projects I have
         worked on.</p>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
         {projects.map((project, pIdx) => {
           const live = project.liveUrl || project.link || "";
           const github = project.githubUrl;
           return (
-            <Card key={project.name} className="flex flex-col">
+            <Card key={project.name} id={slugify(project.name)} className="flex flex-col scroll-mt-24">
               <CardHeader className="pb-0">
                 <h3 className="text-lg font-semibold">{project.name}</h3>
               </CardHeader>
@@ -85,8 +107,19 @@ export default function ProjectsPage() {
                     </div>
                   </div>
                 ) : null}
-                <p
-                  className="text-muted-foreground mb-4">{project.description}</p>
+                <p className="text-muted-foreground mb-3">{project.description}</p>
+                {project.languages?.length ? (
+                  <div className="mb-4 flex flex-wrap gap-2" aria-label={`${project.name} technologies`}>
+                    {project.languages.map((lang, li) => (
+                      <div key={li} className="flex items-center gap-1">
+                        <span className="text-xs px-2 py-1 rounded bg-muted">{lang.name}</span>
+                        {lang.framework?.map((fw, fi) => (
+                          <span key={fi} className="text-xs px-2 py-1 rounded bg-muted/70">{fw.name}</span>
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
                 <div className="flex gap-2">
                   {live && (
                     <Button>
