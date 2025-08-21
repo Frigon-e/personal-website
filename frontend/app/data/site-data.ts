@@ -108,6 +108,11 @@ export const workExperiences: WorkExperienceItem[] = [
     company: "Applied Solutions & Consulting",
     duration: "2019 - 2020",
   },
+  {
+    title: "Head Lifeguard",
+    company: "YMCA Southern Interior ",
+    duration: "2017 - 2023",
+  }
 ];
 
 export const education: EducationItem[] = [
