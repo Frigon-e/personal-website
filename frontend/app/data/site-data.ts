@@ -106,7 +106,7 @@ export const workExperiences: WorkExperienceItem[] = [
   {
     title: "Software Developer",
     company: "Applied Solutions & Consulting",
-    duration: "2021 - 2022",
+    duration: "2019 - 2020",
   },
 ];
 
