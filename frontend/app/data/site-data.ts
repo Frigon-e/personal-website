@@ -100,13 +100,13 @@ export const projects: ProjectInformation[] = [
 export const workExperiences: WorkExperienceItem[] = [
   {
     title: "Web Application Developer",
-    company: "Devele",
-    duration: "2021 - Present",
+    company: "Dvele",
+    duration: "2023 - Present",
   },
   {
-    title: "Software Engineer Intern",
-    company: "Tech Solutions",
-    duration: "Summer 2020",
+    title: "Software Developer",
+    company: "Applied Solutions & Consulting",
+    duration: "2021 - 2022",
   },
 ];
 
