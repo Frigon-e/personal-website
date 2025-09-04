@@ -51,6 +51,9 @@ export function Layout({children}: { children: React.ReactNode }) {
       <meta charSet="utf-8"/>
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="color-scheme" content="dark light" />
+      {/* Cloudflare Web Analytics */}
+      <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9d7feb3d173d48ca9ecbf6e8060e4b4d"}'></script>      
+      {/* End Cloudflare Web Analytics */}
       <Meta/>
       <Links/>
     </head>
