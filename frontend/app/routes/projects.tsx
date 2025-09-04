@@ -4,6 +4,9 @@ import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { useSiteData } from "~/hooks/useSiteData";
 import { Button } from "~/components/ui/button";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import ColoredDots from "~/components/ColoredDots";
+import SectionHeader from "~/components/SectionHeader";
+import { useInViewOnce } from "~/hooks/useInViewOnce";
 
 // Create a stable slug for anchor ids
 function slugify(s: string) {
@@ -73,71 +76,78 @@ export default function ProjectsPage() {
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Projects</h1>
-      <p className="text-muted-foreground mb-4">A selection of projects I have
-        worked on.</p>
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
-        {projects.map((project, pIdx) => {
-          const live = project.liveUrl || project.link || "";
-          const github = project.githubUrl;
-          return (
-            <Card key={project.name} id={slugify(project.name)} className="flex flex-col scroll-mt-24">
-              <CardHeader className="pb-0">
-                <h3 className="text-lg font-semibold">{project.name}</h3>
-              </CardHeader>
-              <CardContent>
-                {/* Photo gallery */}
-                {project.photos?.length ? (
-                  <div className="mb-3">
-                    <div className="flex gap-2 overflow-x-auto py-1">
-                      {project.photos.map((src, idx) => (
-                        <button
-                          key={idx}
-                          className="focus:outline-none"
-                          onClick={() => openLightbox(pIdx, idx)}
-                          aria-label={`Open ${project.name} image ${idx + 1}`}
-                        >
-                          <img
-                            src={src}
-                            alt={`${project.name} screenshot ${idx + 1}`}
-                            className="h-28 w-auto rounded-md border object-cover flex-shrink-0"
-                          />
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                ) : null}
-                <p className="text-muted-foreground mb-3">{project.description}</p>
-                {project.languages?.length ? (
-                  <div className="mb-4 flex flex-wrap gap-2" aria-label={`${project.name} technologies`}>
-                    {project.languages.map((lang, li) => (
-                      <div key={li} className="flex items-center gap-1">
-                        <span className="text-xs px-2 py-1 rounded bg-muted">{lang.name}</span>
-                        {lang.framework?.map((fw, fi) => (
-                          <span key={fi} className="text-xs px-2 py-1 rounded bg-muted/70">{fw.name}</span>
-                        ))}
+      <div className="relative mb-6">
+        <SectionHeader title="Projects" subtitle="A selection of projects I have worked on" />
+        <ColoredDots preset="subtle" layer="behind" />
+      </div>
+      <div className="relative">
+        <ColoredDots preset="cornerCluster" layer="front" />
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+          {projects.map((project, pIdx) => {
+            const { ref, inView } = useInViewOnce<HTMLDivElement>({ threshold: 0.15 });
+            const live = project.liveUrl || project.link || "";
+            const github = project.githubUrl;
+            return (
+              <div key={project.name} id={slugify(project.name)} ref={ref} className={`scroll-mt-24 transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`} style={{ transitionDelay: `${pIdx * 100}ms` }}>
+                <Card className="group flex flex-col w-full bg-card border shadow-sm overflow-hidden transition-transform duration-200 hover:-translate-y-1 hover:shadow-md hover:border-primary/30">
+                  <CardHeader className="w-full p-0">
+                    {project.photos?.[0] ? (
+                      <img src={project.photos[0]} alt={`${project.name} cover`} className="w-full h-48 object-cover transition-transform duration-300 ease-out group-hover:scale-[1.03]" />
+                    ) : null}
+                  </CardHeader>
+                  <CardContent className="flex flex-col gap-3 py-4">
+                    <h3 className="text-lg font-semibold text-foreground">{project.name}</h3>
+                    {/* Photo thumbnails (keep test expectations for alt text and open button) */}
+                    {project.photos?.length ? (
+                      <div className="-mt-1">
+                        <div className="flex gap-2 overflow-x-auto py-1">
+                          {project.photos.map((src, idx) => (
+                            <button
+                              key={idx}
+                              className="focus:outline-none"
+                              onClick={() => openLightbox(pIdx, idx)}
+                              aria-label={`Open ${project.name} image ${idx + 1}`}
+                            >
+                              <img
+                                src={src}
+                                alt={`${project.name} screenshot ${idx + 1}`}
+                                className="h-24 w-auto rounded-md border object-cover flex-shrink-0"
+                              />
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                ) : null}
-                <div className="flex gap-2">
-                  {live && (
-                    <Button>
-                      <a href={live} target="_blank"
-                         rel="noopener noreferrer">Live</a>
-                    </Button>
-                  )}
-                  {github && (
-                    <Button variant="outline">
-                      <a href={github} target="_blank"
-                         rel="noopener noreferrer">GitHub</a>
-                    </Button>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          );
-        })}
+                    ) : null}
+                    <p className="text-muted-foreground text-sm">{project.description}</p>
+                    {/* Tech chips from languages and frameworks */}
+                    {project.languages?.length ? (
+                      <div className="flex flex-wrap gap-2" aria-label={`${project.name} technologies`}>
+                        {project.languages.flatMap((lang, li) => [
+                          <span key={`${project.name}-lang-${li}`} className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-muted/20 px-3 py-1.5 text-xs text-foreground whitespace-nowrap">{lang.name}</span>,
+                          ...lang.framework.map((fw, fi) => (
+                            <span key={`${project.name}-fw-${li}-${fi}`} className="inline-flex items-center gap-2 rounded-md border border-border/60 bg-muted/20 px-3 py-1.5 text-xs text-foreground whitespace-nowrap">{fw.name}</span>
+                          )),
+                        ])}
+                      </div>
+                    ) : null}
+                    <div className="flex gap-2 pt-1">
+                      {live && (
+                        <Button className="transition-transform duration-150 hover:-translate-y-0.5">
+                          <a href={live} target="_blank" rel="noopener noreferrer">Live</a>
+                        </Button>
+                      )}
+                      {github && (
+                        <Button variant="outline" className="transition-transform duration-150 hover:-translate-y-0.5">
+                          <a href={github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                        </Button>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {isOpen && (

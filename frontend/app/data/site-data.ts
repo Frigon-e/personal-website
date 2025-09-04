@@ -43,6 +43,10 @@ export type WorkExperienceItem = {
   title: string;
   company: string;
   duration: string;
+  location?: string;
+  summary?: string;
+  achievements?: string[];
+  technologies?: string[];
 };
 
 export type EducationItem = {
@@ -132,16 +136,43 @@ export const workExperiences: WorkExperienceItem[] = [
     title: "Web Application Developer",
     company: "Dvele",
     duration: "2023 - Present",
+    location: "Remote / US",
+    summary:
+      "Lead front-end work on internal platforms and customer-facing apps using TypeScript, React, Redux, React Router, and Tailwind. Partnered closely with design and backend to deliver features end-to-end.",
+    achievements: [
+      "Drove major refactor and code-splitting initiatives reducing bundle size and improving first load time.",
+      "Built shared UI components and patterns that improved delivery speed and consistency across apps.",
+      "Collaborated on Python/Django services and API contracts to unblock front-end features.",
+      "Improved DX by enhancing tooling, linting, and CI checks for the front-end repo.",
+    ],
+    technologies: ["TypeScript", "React", "Redux", "React Router", "Tailwind", "Python", "Django"]
   },
   {
     title: "Software Developer",
     company: "Applied Solutions & Consulting",
     duration: "2019 - 2020",
+    location: "Kelowna, BC",
+    summary:
+      "Worked on client projects across the stack, delivering web features from prototype to deployment.",
+    achievements: [
+      "Implemented responsive UIs and forms, increasing conversion and reducing user error.",
+      "Optimized database access and server endpoints to improve page load times.",
+      "Integrated third‑party APIs and payment providers into existing applications.",
+    ],
+    technologies: ["JavaScript", "TypeScript", "React", "Node.js", "PostgreSQL"]
   },
   {
     title: "Head Lifeguard",
-    company: "YMCA Southern Interior ",
+    company: "YMCA Southern Interior",
     duration: "2017 - 2023",
+    location: "Kelowna, BC",
+    summary:
+      "Led teams to maintain safety and deliver excellent member experience in a high‑traffic facility.",
+    achievements: [
+      "Trained and mentored new lifeguards; coordinated schedules and daily operations.",
+      "Responded to incidents following strict protocols and maintained detailed records.",
+      "Recognized for reliability, communication, and calm leadership under pressure.",
+    ],
   }
 ];
 
