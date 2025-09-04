@@ -52,7 +52,7 @@ export function Layout({children}: { children: React.ReactNode }) {
       <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <meta name="color-scheme" content="dark light" />
       {/* Cloudflare Web Analytics */}
-      <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9d7feb3d173d48ca9ecbf6e8060e4b4d"}'></script>      
+      <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4868f31dad78404e841415c4984c2fa1"}'></script>
       {/* End Cloudflare Web Analytics */}
       <Meta/>
       <Links/>
