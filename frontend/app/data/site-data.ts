@@ -13,6 +13,12 @@ import reduxLogo from "../welcome/language_logos/redux.svg";
 import tailwindLogo from "../welcome/language_logos/tailwind.svg";
 import pythonLogo from "../welcome/language_logos/python.svg";
 import djangoLogo from "../welcome/language_logos/django.svg";
+import golangLogo from "../welcome/language_logos/go.svg";
+
+import battleship_one from "../welcome/project_photos/battleship_one.png";
+import battleship_two from "../welcome/project_photos/battleship_two.png";
+import battleship_three from "../welcome/project_photos/battleship_three.png";
+import gameoflife_one from "../welcome/project_photos/gameoflife_one.png";
 
 export type LanguageSkills = {
   name: string;
@@ -95,6 +101,30 @@ export const projects: ProjectInformation[] = [
     photos: [homelab],
     languages: [],
   },
+  {
+    name: "Game Of Life Golang",
+    description: "This is a game of life implementation in Golang",
+    link: "",
+    photos: [gameoflife_one],
+    languages: [{
+      name: "Go",
+      logo: golangLogo,
+      framework: [],
+    }],
+    githubUrl: "https://github.com/Frigon-e/game-programming",
+  },
+  {
+    name: "BattleShip AI",
+    description: "This my winning college battleship AI. This was translated from the Java version of the game into a golang equilant.",
+    photos: [battleship_one, battleship_two, battleship_three],
+    link: "https://github.com/Frigon-e/game-programming",
+    languages: [{
+      name: "Go",
+      logo: golangLogo,
+      framework: [],
+    }],
+    githubUrl: "https://github.com/Frigon-e/battleship-ai",
+  }
 ];
 
 export const workExperiences: WorkExperienceItem[] = [
