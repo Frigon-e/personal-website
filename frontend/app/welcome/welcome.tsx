@@ -21,7 +21,6 @@ import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import { useSiteData } from "~/hooks/useSiteData";
 import { GraduationCap } from "lucide-react";
 import { Link } from "react-router";
-import { useEffect, useRef, useState } from "react";
 import ColoredDots from "~/components/ColoredDots";
 import { useInViewOnce } from "~/hooks/useInViewOnce";
 
@@ -60,7 +59,7 @@ export function Welcome() {
               innovative, user-friendly web-solutions
               and continuously, exploring new technologies</p>
             <div className="mt-2 flex items-center gap-5">
-              <a href="https://instagram.com/" target="_blank" rel="noreferrer noopener" aria-label="Instagram"
+              <a href="https://www.instagram.com/frigon_e/" target="_blank" rel="noreferrer noopener" aria-label="Instagram"
                  className="group inline-flex items-center justify-center">
                 <svg className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-transparent"
                      viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -75,7 +74,7 @@ export function Welcome() {
                         d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm6.5-.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5z"/>
                 </svg>
               </a>
-              <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn"
+              <a href="https://www.linkedin.com/in/ethan-frigon-aa6a031a0/" target="_blank" rel="noreferrer noopener" aria-label="LinkedIn"
                  className="group inline-flex items-center justify-center">
                 <svg className="h-6 w-6 text-muted-foreground transition-colors group-hover:text-sky-500"
                      viewBox="0 0 24 24" fill="currentColor" aria-hidden>
