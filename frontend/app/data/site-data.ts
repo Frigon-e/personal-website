@@ -4,7 +4,8 @@
 import dvele_project_one from "../welcome/project_photos/dvele_project.png";
 import dvele_dashboard from "../welcome/project_photos/dvele_dashboard.png";
 import dvele_project_two from "../welcome/project_photos/dvele_project_two.png";
-import dveleiq_airquality from "../welcome/project_photos/dveleiq_airquality.png";
+import dveleiq_airquality
+  from "../welcome/project_photos/dveleiq_airquality.png";
 import homelab from "../welcome/project_photos/homelab.png";
 import homelab_two from "../welcome/project_photos/homelab_two.png";
 import homelab_three from "../welcome/project_photos/homelab_three.png";
@@ -74,15 +75,15 @@ export const projects: ProjectInformation[] = [
         name: "TypeScript",
         logo: typescriptLogo,
         framework: [
-          { name: "React", logo: reactLogo },
-          { name: "Redux", logo: reduxLogo },
-          { name: "Tailwind", logo: tailwindLogo },
+          {name: "React", logo: reactLogo},
+          {name: "Redux", logo: reduxLogo},
+          {name: "Tailwind", logo: tailwindLogo},
         ],
       },
       {
         name: "Python",
         logo: pythonLogo,
-        framework: [{ name: "Django", logo: djangoLogo }],
+        framework: [{name: "Django", logo: djangoLogo}],
       },
     ],
   },
@@ -96,9 +97,18 @@ export const projects: ProjectInformation[] = [
       {
         name: "TypeScript",
         logo: typescriptLogo,
-        framework: [{ name: "React", logo: reactLogo }],
+        framework: [{name: "React", logo: reactLogo}],
       },
     ],
+  },
+  {
+    name: "Home Server",
+    description:
+      "Designed and maintained a robust virtualization environment using Proxmox VE, featuring strict network segmentation between internal and external services. The architecture utilizes a dual reverse-proxy setup with Traefik to isolate subnet traffic (192.168.60.x vs 192.168.40.x), protected behind a Cloudflare edge proxy and routed internally via Ubiquiti CyberSecure WAF. I engineered a secure, automated content pipeline where a dedicated processing server handles requests from Jellyseerr and manages data transfer to TrueNAS Scale storage through rigid permission rules. This infrastructure also hosts this personal portfolio via Dokploy.",
+    link: "#",
+    liveUrl: "#",
+    photos: [homelab_two, homelab, homelab_three],
+    languages: [],
   },
   {
     name: "Odoo Enterprise Customizations",
@@ -112,25 +122,16 @@ export const projects: ProjectInformation[] = [
         name: "Python",
         logo: pythonLogo,
         framework: [
-          { name: "Odoo 19", logo: odooLogo},
-          { name: "PostgreSQL", logo: postgresLogo },
+          {name: "Odoo 19", logo: odooLogo},
+          {name: "PostgreSQL", logo: postgresLogo},
         ],
       },
       {
         name: "JavaScript",
         logo: javascriptLogo,
-        framework: [{ name: "OWL", logo: odooLogo}],
+        framework: [{name: "OWL", logo: odooLogo}],
       },
     ],
-  },
-  {
-    name: "Home Server",
-    description:
-      "Designed and maintained a robust virtualization environment using Proxmox VE, featuring strict network segmentation between internal and external services. The architecture utilizes a dual reverse-proxy setup with Traefik to isolate subnet traffic (192.168.60.x vs 192.168.40.x), protected behind a Cloudflare edge proxy and routed internally via Ubiquiti CyberSecure WAF. I engineered a secure, automated content pipeline where a dedicated processing server handles requests from Jellyseerr and manages data transfer to TrueNAS Scale storage through rigid permission rules. This infrastructure also hosts this personal portfolio via Dokploy.",
-    link: "#",
-    liveUrl: "#",
-    photos: [homelab, homelab_two, homelab_three],
-    languages: [],
   },
   {
     name: "Game Of Life Golang",
