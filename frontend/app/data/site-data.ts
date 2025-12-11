@@ -6,6 +6,8 @@ import dvele_dashboard from "../welcome/project_photos/dvele_dashboard.png";
 import dvele_project_two from "../welcome/project_photos/dvele_project_two.png";
 import dveleiq_airquality from "../welcome/project_photos/dveleiq_airquality.png";
 import homelab from "../welcome/project_photos/homelab.png";
+import homelab_two from "../welcome/project_photos/homelab_two.png";
+import homelab_three from "../welcome/project_photos/homelab_three.png";
 
 import typescriptLogo from "../welcome/language_logos/typescript.svg";
 import javascriptLogo from "../welcome/language_logos/javascript.svg";
@@ -124,9 +126,10 @@ export const projects: ProjectInformation[] = [
   {
     name: "Home Server",
     description:
-      "This is a home server that is use to host my personal projects, NAS and other services.",
-    link: "",
-    photos: [homelab],
+      "Designed and maintained a robust virtualization environment using Proxmox VE, featuring strict network segmentation between internal and external services. The architecture utilizes a dual reverse-proxy setup with Traefik to isolate subnet traffic (192.168.60.x vs 192.168.40.x), protected behind a Cloudflare edge proxy and routed internally via Ubiquiti CyberSecure WAF. I engineered a secure, automated content pipeline where a dedicated processing server handles requests from Jellyseerr and manages data transfer to TrueNAS Scale storage through rigid permission rules. This infrastructure also hosts this personal portfolio via Dokploy.",
+    link: "#",
+    liveUrl: "#",
+    photos: [homelab, homelab_two, homelab_three],
     languages: [],
   },
   {
