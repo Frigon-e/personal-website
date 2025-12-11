@@ -8,7 +8,10 @@ import dveleiq_airquality from "../welcome/project_photos/dveleiq_airquality.png
 import homelab from "../welcome/project_photos/homelab.png";
 
 import typescriptLogo from "../welcome/language_logos/typescript.svg";
+import javascriptLogo from "../welcome/language_logos/javascript.svg";
 import reactLogo from "../welcome/language_logos/react.svg";
+import odooLogo from "../welcome/language_logos/odoo.svg";
+import postgresLogo from "../welcome/language_logos/postgres.svg";
 import reduxLogo from "../welcome/language_logos/redux.svg";
 import tailwindLogo from "../welcome/language_logos/tailwind.svg";
 import pythonLogo from "../welcome/language_logos/python.svg";
@@ -60,8 +63,7 @@ export type EducationItem = {
 export const projects: ProjectInformation[] = [
   {
     name: "One Dvele",
-    description:
-      "One Dvele is a web application that is created to help be a centralized hub for Dvele employees to find information",
+    description: "Architected and developed a full-stack, enterprise-grade project management platform acting as the central hub for the entire home-building lifecycle. Built with Django and React, the system features a robust Role-Based Access Control (RBAC) system integrated with AWS Cognito, and a real-time collaboration feed ('The Wall') powered by Django Channels and Redis. I engineered automated workflows that integrate Google Workspace for document generation and DocuSign for electronic signatures, alongside a custom CRM pipeline and asynchronous task processing using Celery to streamline operations across sales, manufacturing, and client services.",
     link: "https://one.dvele.com/",
     liveUrl: "https://one.dvele.com/",
     photos: [dvele_project_one, dvele_dashboard, dvele_project_two],
@@ -84,8 +86,7 @@ export const projects: ProjectInformation[] = [
   },
   {
     name: "DveleIQ",
-    description:
-      "This is a smart home application including a smart light bulb, smart thermostat, and smart door lock support.",
+    description: "Engineered a comprehensive microservices-based home automation platform bridging local smart environments with the cloud. I developed 'rosie-bridge', a Python service orchestrating bi-directional communication between Home Assistant and AWS IoT Core via MQTT with TLS encryption. On the frontend, I built a React Native mobile application utilizing Redux Toolkit and RTK Query to aggregate real-time data from internal APIs and third-party services like SolarEdge. The architecture includes a resilient time-series data pipeline to AWS Timestream for sensor analytics and automated device provisioning, all deployed within a secure Docker Swarm cluster using Cloudflare Tunnels.",
     link: "https://play.google.com/store/apps/details?id=com.dvele.dveleiq",
     liveUrl: "https://play.google.com/store/apps/details?id=com.dvele.dveleiq",
     photos: [dveleiq_airquality],
@@ -94,6 +95,29 @@ export const projects: ProjectInformation[] = [
         name: "TypeScript",
         logo: typescriptLogo,
         framework: [{ name: "React", logo: reactLogo }],
+      },
+    ],
+  },
+  {
+    name: "Odoo Enterprise Customizations",
+    description:
+      "A suite of advanced custom modules for Odoo 18 designed to extend core ERP functionality. I architected interactive frontend features using the OWL framework, such as a Sales Performance Dashboard and custom Financial Report filters. On the backend, I implemented high-performance data aggregation using raw SQL queries to bypass ORM overhead for complex KPIs. The project involves sophisticated techniques like monkey-patching the web editor for Loom integration and overriding core ORM methods for robust CRM history tracking.",
+    link: "#",
+    liveUrl: "#",
+    photos: [],
+    languages: [
+      {
+        name: "Python",
+        logo: pythonLogo,
+        framework: [
+          { name: "Odoo 19", logo: odooLogo},
+          { name: "PostgreSQL", logo: postgresLogo },
+        ],
+      },
+      {
+        name: "JavaScript",
+        logo: javascriptLogo,
+        framework: [{ name: "OWL", logo: odooLogo}],
       },
     ],
   },
